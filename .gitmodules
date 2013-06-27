@@ -1,0 +1,3 @@
+[submodule "E200_data"]
+	path = E200_data
+	url = git@github.com:aard-pwfa/E200_data.git
