@@ -221,7 +221,7 @@ global dirs;
 global gl;
 
 % Extract most recent file location
-searchpath = '/nas/nas-li20-pm01/E200/';
+searchpath = '/nas/nas-li20-pm03/E200/';
 dirs       = dir(searchpath);
 first      = dirs(3).name;
 searchpath = [searchpath first '/'];
