@@ -10,24 +10,13 @@ set(handles.Shotnumbertext,'Enable','off');
 set(handles.Maxcounts,'Enable','off');
 set(handles.Usebg,'Enable','off');
 
-
-
 step=int32(get(handles.Stepnumberslider,'Value'));
 
 selstr=getlistsel(handles.Cams);
 
-display(['Loading images, expect ' num2str(handles.param.n_shot*15/100) ' second wait...']);
-switch handles.settype
-    case 'scan'
-        handles.images=E200_readImages(handles.scan.scan_info(step).(selstr));
-    case 'daq'
-        handles.images = E200_readImages(handles.daq.filenames.(selstr));
-        set(handles.Stepnumbertext,'String','N/A');
-    otherwise
-        error('No images loaded!');
-end
+display(['Loading images, expect ' num2str(handles.data.raw.metadata.param.dat{1}.n_shot*15/100) ' second wait...']);
 
-handles.maxrawpixel=max(handles.images(:));
+handles.maxrawpixel=maxpixel(handles.images);
 set(handles.Maxcounts,'Max',handles.maxrawpixel);
 set(handles.Maxcounts,'Value',handles.maxrawpixel);
 set(handles.Maxcounts,'SliderStep',[1/handles.maxrawpixel,10/handles.maxrawpixel])
@@ -50,4 +39,14 @@ set(handles.Usebg,'Enable','on');
 
 guidata(hObject,handles);
 
+end
+
+function out=maxpixel(imagecell)
+	out=0;
+	display(size(imagecell));
+	for i=imagecell
+		display(size(i));
+		out=max(out,max(max(i{1})));
+	end
+	display(out);
 end

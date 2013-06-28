@@ -22,24 +22,24 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 27-Jun-2013 12:47:52
+% Last Modified by GUIDE v2.5 27-Jun-2013 22:46:49
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
-gui_State = struct('gui_Name',       mfilename, ...
-                   'gui_Singleton',  gui_Singleton, ...
-                   'gui_OpeningFcn', @E200_DRT_OpeningFcn, ...
-                   'gui_OutputFcn',  @E200_DRT_OutputFcn, ...
-                   'gui_LayoutFcn',  [] , ...
-                   'gui_Callback',   []);
+gui_State = struct('gui_Name',	   mfilename, ...
+				   'gui_Singleton',  gui_Singleton, ...
+				   'gui_OpeningFcn', @E200_DRT_OpeningFcn, ...
+				   'gui_OutputFcn',  @E200_DRT_OutputFcn, ...
+				   'gui_LayoutFcn',  [] , ...
+				   'gui_Callback',   []);
 if nargin && ischar(varargin{1})
-    gui_State.gui_Callback = str2func(varargin{1});
+	gui_State.gui_Callback = str2func(varargin{1});
 end
 
 if nargout
-    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+	[varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
 else
-    gui_mainfcn(gui_State, varargin{:});
+	gui_mainfcn(gui_State, varargin{:});
 end
 % End initialization code - DO NOT EDIT
 
@@ -62,6 +62,8 @@ initialize_gui(hObject, handles, false);
 % UIWAIT makes E200_DRT wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
+addpath(fullfile(pwd,'E200_data'));
+
 
 % --- Outputs from this function are returned to the command line.
 function varargout = E200_DRT_OutputFcn(hObject, eventdata, handles)
@@ -83,7 +85,7 @@ function density_CreateFcn(hObject, eventdata, handles)
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -97,8 +99,8 @@ function density_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of density as a double
 density = str2double(get(hObject, 'String'));
 if isnan(density)
-    set(hObject, 'String', 0);
-    errordlg('Input must be a number','Error');
+	set(hObject, 'String', 0);
+	errordlg('Input must be a number','Error');
 end
 
 % Save the new density value
@@ -114,7 +116,7 @@ function volume_CreateFcn(hObject, eventdata, handles)
 % Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -128,8 +130,8 @@ function volume_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of volume as a double
 volume = str2double(get(hObject, 'String'));
 if isnan(volume)
-    set(hObject, 'String', 0);
-    errordlg('Input must be a number','Error');
+	set(hObject, 'String', 0);
+	errordlg('Input must be a number','Error');
 end
 
 % Save the new volume value
@@ -160,13 +162,13 @@ function unitgroup_SelectionChangeFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 if (hObject == handles.english)
-    set(handles.text4, 'String', 'lb/cu.in');
-    set(handles.text5, 'String', 'cu.in');
-    set(handles.text6, 'String', 'lb');
+	set(handles.text4, 'String', 'lb/cu.in');
+	set(handles.text5, 'String', 'cu.in');
+	set(handles.text6, 'String', 'lb');
 else
-    set(handles.text4, 'String', 'kg/cu.m');
-    set(handles.text5, 'String', 'cu.m');
-    set(handles.text6, 'String', 'kg');
+	set(handles.text4, 'String', 'kg/cu.m');
+	set(handles.text5, 'String', 'cu.m');
+	set(handles.text6, 'String', 'kg');
 end
 
 % --------------------------------------------------------------------
@@ -175,7 +177,7 @@ function initialize_gui(fig_handle, handles, isreset)
 % we are we are just re-initializing a GUI by calling it from the cmd line
 % while it is up. So, bail out as we dont want to reset the data.
 if isfield(handles, 'metricdata') && ~isreset
-    return;
+	return;
 end
 
 % Update handles structure
@@ -188,7 +190,6 @@ function currentfile_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of currentfile as text
 %        str2double(get(hObject,'String')) returns contents of currentfile as a double
-display('hi!')
 
 % --- Executes during object creation, after setting all properties.
 function currentfile_CreateFcn(hObject, eventdata, handles)
@@ -199,7 +200,7 @@ function currentfile_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -221,7 +222,7 @@ global dirs;
 global gl;
 
 % Extract most recent file location
-searchpath = '/nas/nas-li20-pm01/E200/';
+searchpath = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/';
 dirs       = dir(searchpath);
 first      = dirs(3).name;
 searchpath = [searchpath first '/'];
@@ -237,21 +238,21 @@ searchlist = {{'scan_info.mat','scan'},{'filenames.mat','daq'}};
 settype='none';
 filtstr='';
 for searchstr=searchlist
-    desiredfiles=dir(fullfile(searchpath,['*' searchstr{1}{1}]));
-    if size(desiredfiles,1)>0
-        settype=searchstr{1}{2};
-        filtstr=searchstr{1}{1};
-        break;
-    end
+	desiredfiles=dir(fullfile(searchpath,['*' searchstr{1}{1}]));
+	if size(desiredfiles,1)>0
+		settype=searchstr{1}{2};
+		filtstr=searchstr{1}{1};
+		break;
+	end
 end
 
 switch settype
-    case 'scan'
-        defaultfile=[third '_' filtstr];
-    case 'daq'
-        defaultfile=desiredfiles(1).name;
-    case 'none'
-        defaultfile='';
+	case 'scan'
+		defaultfile=[third '_' filtstr];
+	case 'daq'
+		defaultfile=desiredfiles(1).name;
+	case 'none'
+		defaultfile='';
 end
 
 curpath=pwd;
@@ -263,95 +264,75 @@ cd(curpath);
 % Filename='E200_11071_scan_info.mat';
 
 % gl.filename=Filename;
+loadfile=fullfile(Pathname,Filename);
+loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
 
-settype='none';
-filtstr='';
-if (Filename~=0)
-    for searchstr=searchlist
-        if ~isempty(strfind(Filename,searchstr{1}{1}))
-            handles.settype=searchstr{1}{2};
-            handles.filtstr=searchstr{1}{1};
-            guidata(hObject,handles);
-        end
-    end
-else
-    error('File not selected');
-end
+data=E200_load_data(loadfile);
+% display(data.VersionInfo.Version);
 
-% Type-specific Initialization
-switch handles.settype
-    case 'scan'
+switch data.raw.metadata.settype
+	case 'scan'
 
-        % Load scan_info file
-        load([Pathname Filename]);
-        
-        % Load first filename file
-        dirs=dir(fullfile(Pathname,'*_2013*.mat'));
-        load([Pathname dirs(1).name]);
+		n_steps=size(data.raw.metadata.scan_info,2);
+		set(handles.Stepstaken,'String',n_steps);
+		set(handles.Stepnumberslider,'Min',1);
+		set(handles.Stepnumberslider,'Max',n_steps);
+		set(handles.Stepnumberslider,'Value',1);
+		set(handles.Stepnumberslider,'SliderStep',[1/n_steps,10/n_steps]);
+		set(handles.Stepnumberslider,'Enable','On');
+		set(handles.Stepnumbertext,'String',1);
+		set(handles.Stepnumbertext,'Enable','on');
 
-        n_steps=size(scan_info,2);
-        set(handles.Stepstaken,'String',n_steps);
-        set(handles.Stepnumberslider,'Min',1);
-        set(handles.Stepnumberslider,'Max',n_steps);
-        set(handles.Stepnumberslider,'Value',1);
-        set(handles.Stepnumberslider,'SliderStep',[1/n_steps,10/n_steps]);
-        set(handles.Stepnumberslider,'Enable','On');
-        set(handles.Stepnumbertext,'String',1);
-        set(handles.Stepnumbertext,'Enable','on');
-
-        handles.scan.scan_info=scan_info;
-        handles.scan.n_steps=n_steps;
-        
-    case 'daq'
-        
-        % Load file
-        load([Pathname Filename(1:end-14) '.mat']);
-        load([Pathname Filename]);
-        
-        handles.daq.filenames=filenames;
-        
-        gl.file=[Pathname Filename];
-        
-        set(handles.Stepstaken,'String','NOT A SCAN: NO STEPS!');
-        
-        set(handles.Stepnumberslider,'Enable','Off');
-        set(handles.Stepnumbertext,'String','N/A');
-    case 'none'
+		handles.scan.scan_info=scan_info;
+		handles.scan.n_steps=n_steps;
+		
+	case 'daq'
+		
+		set(handles.Stepstaken,'String','NOT A SCAN: NO STEPS!');
+		
+		set(handles.Stepnumberslider,'Enable','Off');
+		set(handles.Stepnumbertext,'String','N/A');
+	case 'none'
 end
 
 % All file initializations
-if ~strcmp(handles.settype,'none')
-    
-    set(handles.Cams,'String',{param.cams{:,1}});
-    % set(handles.Cams,'Max',size(param.cams,1));
-    
-    set(handles.currentfile,'String',Pathname);
-    set(handles.FileDate,'String',[second(5:6) '-' second(7:8) '-' second(1:4)]);
-    
-    set(handles.Shotsperstep,'String',param.n_shot);
-    set(handles.Shotnumberslider,'Min',1);
-    set(handles.Shotnumberslider,'Max',param.n_shot);
-    set(handles.Shotnumberslider,'Value',1);
-    set(handles.Shotnumberslider,'SliderStep',[1/param.n_shot,10/param.n_shot]);
-    set(handles.Shotnumberslider,'Enable','off');
-    set(handles.Shotnumbertext,'String','');
-    set(handles.Usebg,'Enable','off');
+if ~strcmp(data.raw.metadata.settype,'none')
+	param=data.raw.metadata.param.dat{1};
 
-    % Turn things off.
-    cla(handles.fig1);
-    
-    set(handles.Comment,'String',param.comt_str);
+	% Set strings
+	Cams_str=fieldnames(data.raw.images);
+	set(handles.Cams,'String',Cams_str);
+	% set(handles.Cams,'Max',size(param.cams,1));
 
-    handles.param=param;
-    handles.cam_back=cam_back;
-    
-    gl.param=param;
-    gl.Pathname=Pathname;
-    gl.dirs=dirs;
-    gl.cam_back=cam_back;
-    gl.handles=handles;
+	% Save lookup table
+	handles.CamsLookup.datatype=cell_construct('raw',1,size(Cams_str,1));
+	handles.CamsLookup.name=Cams_str;
+	
+	set(handles.currentfile,'String',loadfile);
+	set(handles.FileDate,'String',[param.year '-' param.month '-' param.day]);
+	
+	set(handles.Shotsperstep,'String',param.n_shot);
+	set(handles.Shotnumberslider,'Min',1);
+	set(handles.Shotnumberslider,'Max',param.n_shot);
+	set(handles.Shotnumberslider,'Value',1);
+	set(handles.Shotnumberslider,'SliderStep',[1/param.n_shot,10/param.n_shot]);
+	set(handles.Shotnumberslider,'Enable','off');
+	set(handles.Shotnumbertext,'String','');
+	set(handles.Usebg,'Enable','off');
+
+	% Turn things off.
+	cla(handles.fig1);
+	
+	set(handles.Comment,'String',param.comt_str);
+
+ 	handles.data=data;   
+	
+	% gl.param=param;
+	% gl.Pathname=Pathname;
+	% gl.dirs=dirs;
+	% gl.cam_back=cam_back;
+	gl.handles=handles;
 end
-
 guidata(hObject,handles);
 
 % --- If Enable == 'on', executes on mouse press in 5 pixel border.
@@ -381,7 +362,7 @@ function FileDate_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -404,7 +385,7 @@ function FileTime_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -417,8 +398,29 @@ function Cams_Callback(hObject, eventdata, handles)
 % Hints: contents = get(hObject,'String') returns Cams contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from Cams
 try
-    handles=rmfield(handles,'maxsubpixel');
+	handles=rmfield(handles,'maxsubpixel');
 end
+data=handles.data;
+
+camind=get(hObject,'Value');
+datatype=handles.CamsLookup.datatype{camind};
+name=handles.CamsLookup.name{camind};
+imgstruct=data.(datatype).images.(name);
+
+allsteps=get(handles.allsteps,'Value');
+allshots=get(handles.allshots,'Value');
+
+if allsteps
+	wanted_UID_step=data.raw.scalars.step_num.UID;
+else
+	stepval=get(handles.Stepnumberslider,'Value');
+	bool=(data.raw.scalars.step_num.dat==stepval);
+	wanted_UID_step=data.raw.scalars.step_num.UID(bool);
+end
+
+size(wanted_UID_step)
+handles.images=E200_load_images(imgstruct,wanted_UID_step);
+
 handles=loadimages(hObject,handles);
 plotpanel(hObject,handles);
 
@@ -432,7 +434,7 @@ function Cams_CreateFcn(hObject, eventdata, handles)
 % Hint: listbox controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 % --- Executes during object creation, after setting all properties.
@@ -461,7 +463,7 @@ function Stepstaken_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -484,7 +486,7 @@ function Shotsperstep_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -502,7 +504,7 @@ global gl
 set(handles.Stepnumbertext,'String',num2str(int32(get(handles.Stepnumberslider,'Value'))))
 
 try
-    handles=rmfield(handles,'maxsubpixel');
+	handles=rmfield(handles,'maxsubpixel');
 end
 handles = loadimages(hObject,handles);
 plotpanel(hObject,handles);
@@ -520,7 +522,7 @@ function Stepnumberslider_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -546,7 +548,7 @@ function Shotnumberslider_CreateFcn(hObject, eventdata, handles)
 
 % Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
+	set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
 
@@ -569,7 +571,7 @@ function Comment_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -586,11 +588,11 @@ value=str2num(get(hObject,'String'));
 value=round(value);
 
 if sum(value==[1:handles.scan.n_steps])
-    set(handles.Stepnumberslider,'Value',value);
-    handles = loadimages(hObject,handles);
-    plotpanel(hObject,handles);
+	set(handles.Stepnumberslider,'Value',value);
+	handles = loadimages(hObject,handles);
+	plotpanel(hObject,handles);
 else
-    error(['Input not in allowed range: 1 to ' handles.scan.n_steps])
+	error(['Input not in allowed range: 1 to ' handles.scan.n_steps])
 end
 
 
@@ -604,7 +606,7 @@ function Stepnumbertext_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -621,15 +623,15 @@ value=str2num(get(hObject,'String'));
 value=round(value);
 
 if sum(value==[1:handles.param.n_shot])
-    
-%     try
-%         handles=rmfield(handles,'maxsubpixel');
-%     end
+	
+%	 try
+%		 handles=rmfield(handles,'maxsubpixel');
+%	 end
 
-    set(handles.Shotnumberslider,'Value',value);
-    plotpanel(hObject,handles);
+	set(handles.Shotnumberslider,'Value',value);
+	plotpanel(hObject,handles);
 else
-    error(['Input not in allowed range: 1 to ' handles.param.n_shot])
+	error(['Input not in allowed range: 1 to ' handles.param.n_shot])
 end
 
 
@@ -642,7 +644,7 @@ function Shotnumbertext_CreateFcn(hObject, eventdata, handles)
 % Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
+	set(hObject,'BackgroundColor','white');
 end
 
 
@@ -666,7 +668,7 @@ function Maxcounts_CreateFcn(hObject, eventdata, handles)
 
 % Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
+	set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
 
@@ -679,5 +681,45 @@ function Usebg_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of Usebg
 
 plotpanel(hObject,handles);
+
+
+% --- Executes on button press in allsteps.
+function allsteps_Callback(hObject, eventdata, handles)
+% hObject    handle to allsteps (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of allsteps
+
+
+% --- Executes on button press in allshots.
+function allshots_Callback(hObject, eventdata, handles)
+% hObject    handle to allshots (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of allshots
+
+
+% --- Executes on slider movement.
+function imageslider_Callback(hObject, eventdata, handles)
+% hObject    handle to imageslider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function imageslider_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to imageslider (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
 
 
