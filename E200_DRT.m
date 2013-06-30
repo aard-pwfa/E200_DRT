@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 27-Jun-2013 22:46:49
+% Last Modified by GUIDE v2.5 29-Jun-2013 19:37:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -264,8 +264,8 @@ cd(curpath);
 % Filename='E200_11071_scan_info.mat';
 
 % gl.filename=Filename;
-loadfile=fullfile(Pathname,Filename);
-loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
+loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+% loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
 
 data=E200_load_data(loadfile);
 % display(data.VersionInfo.Version);
@@ -318,7 +318,18 @@ if ~strcmp(data.raw.metadata.settype,'none')
 	set(handles.Shotnumberslider,'SliderStep',[1/param.n_shot,10/param.n_shot]);
 	set(handles.Shotnumberslider,'Enable','off');
 	set(handles.Shotnumbertext,'String','');
-	set(handles.Usebg,'Enable','off');
+
+	set(handles.imageslider,'Min',1);
+	set(handles.imageslider,'Max',1);
+	set(handles.imageslider,'Value',1);
+	set(handles.imageslider,'SliderStep',[1,10]);
+	set(handles.imageslider,'Enable','off');
+
+	corr_str=fieldnames(data.raw.scalars);
+	% First is special: just use index.
+	corr_str=['As taken';corr_str];
+	set(handles.Xcorrpopup,'String',corr_str);
+	set(handles.Ycorrpopup,'String',corr_str);
 
 	% Turn things off.
 	cla(handles.fig1);
@@ -400,26 +411,6 @@ function Cams_Callback(hObject, eventdata, handles)
 try
 	handles=rmfield(handles,'maxsubpixel');
 end
-data=handles.data;
-
-camind=get(hObject,'Value');
-datatype=handles.CamsLookup.datatype{camind};
-name=handles.CamsLookup.name{camind};
-imgstruct=data.(datatype).images.(name);
-
-allsteps=get(handles.allsteps,'Value');
-allshots=get(handles.allshots,'Value');
-
-if allsteps
-	wanted_UID_step=data.raw.scalars.step_num.UID;
-else
-	stepval=get(handles.Stepnumberslider,'Value');
-	bool=(data.raw.scalars.step_num.dat==stepval);
-	wanted_UID_step=data.raw.scalars.step_num.UID(bool);
-end
-
-size(wanted_UID_step)
-handles.images=E200_load_images(imgstruct,wanted_UID_step);
 
 handles=loadimages(hObject,handles);
 plotpanel(hObject,handles);
@@ -671,18 +662,6 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 	set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-
-% --- Executes on button press in Usebg.
-function Usebg_Callback(hObject, eventdata, handles)
-% hObject    handle to Usebg (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hint: get(hObject,'Value') returns toggle state of Usebg
-
-plotpanel(hObject,handles);
-
-
 % --- Executes on button press in allsteps.
 function allsteps_Callback(hObject, eventdata, handles)
 % hObject    handle to allsteps (see GCBO)
@@ -710,6 +689,8 @@ function imageslider_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
+plotpanel(hObject,handles);
+
 
 % --- Executes during object creation, after setting all properties.
 function imageslider_CreateFcn(hObject, eventdata, handles)
@@ -722,4 +703,61 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
+% --- Executes on selection change in Xcorrpopup.
+function Xcorrpopup_Callback(hObject, eventdata, handles)
+% hObject    handle to Xcorrpopup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns Xcorrpopup contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from Xcorrpopup
+
+
+% --- Executes during object creation, after setting all properties.
+function Xcorrpopup_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Xcorrpopup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+% --- Executes on selection change in Ycorrpopup.
+function Ycorrpopup_Callback(hObject, eventdata, handles)
+% hObject    handle to Ycorrpopup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns Ycorrpopup contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from Ycorrpopup
+
+
+% --- Executes during object creation, after setting all properties.
+function Ycorrpopup_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Ycorrpopup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in Corrplotbutton.
+function Corrplotbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to Corrplotbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global gl
+
+gl.hObject=hObject;
+
+handles=corrplot(hObject,handles);
+
+guidata(hObject,handles);
 
