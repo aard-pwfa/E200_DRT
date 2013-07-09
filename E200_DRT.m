@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 29-Jun-2013 19:37:51
+% Last Modified by GUIDE v2.5 08-Jul-2013 14:14:54
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -222,10 +222,28 @@ global dirs;
 global gl;
 
 % Extract most recent file location
-searchpath = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/';
+% searchpath = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/';
+prefix=get_remoteprefix();
+searchpath = fullfile(prefix,'/nas/nas-li20-pm01/E200/');
 dirs       = dir(searchpath);
-first      = dirs(3).name;
-searchpath = [searchpath first '/'];
+% Convert to structure
+dirs=struct2cell(dirs);
+% Order by date
+date=dirs(5,:);
+date=cell2mat(date);
+[ignore,ind]=sort(date);
+dirs=dirs(:,ind);
+
+% Get only directory names
+dir_names=dirs(1,:);
+% Look for directories with 4-digit
+bool1=~cellfun(@isempty,regexp(dir_names,'\d{4}'));
+% Directories only 4 characters long.
+bool2=cellfun(@(x) length(x)==4,dir_names);
+dirs=dirs(:,bool1 & bool2);
+first=dirs{1,end};
+
+searchpath = fullfile(searchpath,[first '/']);
 dirs       = dir(searchpath);
 second     = dirs(end).name;
 searchpath = [searchpath second '/'];
@@ -263,8 +281,18 @@ cd(curpath);
 % Pathname='/nas/nas-li20-pm01/E200/2013/20130511/E200_11071/';
 % Filename='E200_11071_scan_info.mat';
 
-% gl.filename=Filename;
-loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+% Get the hostname of the computer.
+[status,hostname]=unix('hostname');
+hostname = strrep(hostname,sprintf('\n'),'');
+isfs20=strcmp(hostname,'facet-srv20');
+
+if isfs20
+	loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+else
+	loadfile=fullfile(Pathname,Filename)
+end
+
+gl.loadfile=loadfile;
 % loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
 
 data=E200_load_data(loadfile);
@@ -760,4 +788,3 @@ gl.hObject=hObject;
 handles=corrplot(hObject,handles);
 
 guidata(hObject,handles);
-
