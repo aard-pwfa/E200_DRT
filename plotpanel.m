@@ -7,6 +7,10 @@ function handles=plotpanel(hObject,handles)
 	
 	imgnum=int32(get(handles.imageslider,'Value'));
 	maxval=int32(get(handles.Maxcounts,'Value'));
+
+	cmap=custom_cmap();
+	colormap(cmap.wbgyr);
+
 	imagesc(handles.images{imgnum},[0,maxval]);
 	
 	
