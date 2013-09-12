@@ -275,7 +275,7 @@ end
 
 curpath=pwd;
 cd(searchpath);
-[Filename,Pathname,FilterIndex]=uigetfile(['*' filtstr],'Open E200 scan_info file',defaultfile);
+[Filename,Pathname,FilterIndex]=uigetfile('*.mat','Open E200 scan_info file',defaultfile);
 cd(curpath);
 
 % Pathname='/nas/nas-li20-pm01/E200/2013/20130511/E200_11071/';
@@ -311,7 +311,7 @@ switch data.raw.metadata.settype
 		set(handles.Stepnumbertext,'String',1);
 		set(handles.Stepnumbertext,'Enable','on');
 
-		handles.scan.scan_info=scan_info;
+		handles.scan.scan_info=data.raw.metadata.scan_info;
 		handles.scan.n_steps=n_steps;
 		
 	case 'daq'
@@ -352,6 +352,12 @@ if ~strcmp(data.raw.metadata.settype,'none')
 	set(handles.imageslider,'Value',1);
 	set(handles.imageslider,'SliderStep',[1,10]);
 	set(handles.imageslider,'Enable','off');
+
+	set(handles.Maxcounts,'Min',1);
+	set(handles.Maxcounts,'Max',1);
+	set(handles.Maxcounts,'Value',1);
+	set(handles.Maxcounts,'SliderStep',[1,10]);
+	set(handles.Maxcounts,'Enable','off');
 
 	corr_str=fieldnames(data.raw.scalars);
 	% First is special: just use index.
@@ -440,6 +446,7 @@ try
 	handles=rmfield(handles,'maxsubpixel');
 end
 
+set(handles.imageslider,'Value',1);
 handles=loadimages(hObject,handles);
 plotpanel(hObject,handles);
 

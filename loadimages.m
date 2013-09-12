@@ -37,10 +37,10 @@ imagesc(handles.images{get(handles.imageslider,'Value')});
 % imagesc(
 
 handles.maxrawpixel=maxpixel(handles.images);
+set(handles.Maxcounts,'Enable','on');
 set(handles.Maxcounts,'Max',handles.maxrawpixel);
 set(handles.Maxcounts,'Value',handles.maxrawpixel);
-set(handles.Maxcounts,'SliderStep',[1/(handles.maxrawpixel-1),10/(handles.maxrawpixel-1)])
-set(handles.Maxcounts,'Enable','on');
+set(handles.Maxcounts,'SliderStep',[0.01,0.1])
 set(handles.Shotnumberslider,'Enable','on');
 set(handles.Shotnumberslider,'Value',1);
 set(handles.Shotnumbertext,'String','1');
