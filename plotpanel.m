@@ -11,7 +11,14 @@ function handles=plotpanel(hObject,handles)
 	cmap=custom_cmap();
 	colormap(cmap.wbgyr);
 
-	imagesc(handles.images{imgnum},[0,maxval]);
+	% img=handles.images{imgnum}-uint16(handles.images_bg{imgnum});
+	img=handles.images{imgnum};
+	img=rot90(img);
+	% % img=fliplr(img);
+	img=log10(double(img));
+	maxval=max(max(img));
+
+	imagesc(img,[1,maxval]);
 	
 	
 	% if ~strcmp(get(hObject,'tag'),'Shotnumberslider')

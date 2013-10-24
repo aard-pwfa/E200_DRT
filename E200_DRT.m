@@ -218,8 +218,8 @@ function OpenDataset_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global dirs;
-global gl;
+% global dirs;
+% global gl;
 
 % Extract most recent file location
 % searchpath = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/';
@@ -292,7 +292,7 @@ else
 	loadfile=fullfile(Pathname,Filename)
 end
 
-gl.loadfile=loadfile;
+% gl.loadfile=loadfile;
 % loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
 
 data=E200_load_data(loadfile);
@@ -306,7 +306,7 @@ switch data.raw.metadata.settype
 		set(handles.Stepnumberslider,'Min',1);
 		set(handles.Stepnumberslider,'Max',n_steps);
 		set(handles.Stepnumberslider,'Value',1);
-		set(handles.Stepnumberslider,'SliderStep',[1/n_steps,10/n_steps]);
+		set(handles.Stepnumberslider,'SliderStep',[1/(n_steps-1),2/(n_steps-1)]);
 		set(handles.Stepnumberslider,'Enable','On');
 		set(handles.Stepnumbertext,'String',1);
 		set(handles.Stepnumbertext,'Enable','on');
@@ -376,7 +376,7 @@ if ~strcmp(data.raw.metadata.settype,'none')
 	% gl.Pathname=Pathname;
 	% gl.dirs=dirs;
 	% gl.cam_back=cam_back;
-	gl.handles=handles;
+	% gl.handles=handles;
 end
 guidata(hObject,handles);
 
@@ -525,7 +525,7 @@ function Stepnumberslider_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of Stepnumberslider as text
 %        str2double(get(hObject,'String')) returns contents of Stepnumberslider as a double
 
-global gl
+% global gl
 
 set(handles.Stepnumbertext,'String',num2str(int32(get(handles.Stepnumberslider,'Value'))))
 
@@ -535,7 +535,7 @@ end
 handles = loadimages(hObject,handles);
 plotpanel(hObject,handles);
 
-gl.handles=handles;
+% gl.handles=handles;
 
 
 
@@ -788,9 +788,9 @@ function Corrplotbutton_Callback(hObject, eventdata, handles)
 % hObject    handle to Corrplotbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global gl
+% global gl
 
-gl.hObject=hObject;
+% gl.hObject=hObject;
 
 handles=corrplot(hObject,handles);
 
