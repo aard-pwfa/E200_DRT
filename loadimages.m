@@ -11,14 +11,12 @@ function handles=loadimages(hObject,handles)
 	set(handles.Shotnumbertext,'Enable','off');
 	set(handles.imageslider,'Enable','off');
 	set(handles.Maxcounts,'Enable','off');
+	set(handles.Mincounts,'Enable','off');
 	
 	% Make things cleaner
 	data=handles.data;
 	
-	camind=get(hObject,'Value');
-	datatype=handles.CamsLookup.datatype{camind};
-	name=handles.CamsLookup.name{camind};
-	imgstruct=data.(datatype).images.(name);
+	imgstruct=get_imgstruct(handles);
 	
 	allsteps=get(handles.allsteps,'Value');
 	allshots=get(handles.allshots,'Value');
@@ -43,10 +41,17 @@ function handles=loadimages(hObject,handles)
 	% imagesc(
 	
 	handles.maxrawpixel=maxpixel(handles.images);
+
 	set(handles.Maxcounts,'Enable','on');
 	set(handles.Maxcounts,'Max',handles.maxrawpixel);
 	set(handles.Maxcounts,'Value',handles.maxrawpixel);
 	set(handles.Maxcounts,'SliderStep',[0.01,0.1])
+
+	set(handles.Mincounts,'Enable','on');
+	set(handles.Mincounts,'Max',handles.maxrawpixel);
+	set(handles.Mincounts,'Value',0);
+	set(handles.Mincounts,'SliderStep',[0.01,0.1])
+	
 	set(handles.Shotnumberslider,'Enable','on');
 	set(handles.Shotnumberslider,'Value',1);
 	set(handles.Shotnumbertext,'String','1');
@@ -60,22 +65,13 @@ function handles=loadimages(hObject,handles)
 	% set(handles.imageslider,'Value',1);
 	set(handles.imageslider,'SliderStep',[1/(num_img-1),10/(num_img-1)])
 	
-	% set(handles.Maxcounts,'Max',handles.maxrawpixel);
-	% set(handles.Maxcounts,'Value',handles.maxrawpixel);
-	% set(handles.Maxcounts,'SliderStep',[1/handles.maxrawpixel,10/handles.maxrawpixel]);
-	% set(handles.Maxcounts,'Enable','on');
-	% gl.handles=handles;
-	
 	guidata(hObject,handles);
 	
 end
 
 function out=maxpixel(imagecell)
 	out=0;
-	% display(size(imagecell));
 	for i=imagecell
-		% display(size(i));
 		out=max(out,max(max(i{1})));
 	end
-	% display(out);
 end

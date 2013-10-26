@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 08-Jul-2013 14:14:54
+% Last Modified by GUIDE v2.5 25-Oct-2013 17:01:57
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -359,6 +359,12 @@ if ~strcmp(data.raw.metadata.settype,'none')
 	set(handles.Maxcounts,'SliderStep',[1,10]);
 	set(handles.Maxcounts,'Enable','off');
 
+	set(handles.Mincounts,'Min',0);
+	set(handles.Mincounts,'Max',1);
+	set(handles.Mincounts,'Value',1);
+	set(handles.Mincounts,'SliderStep',[1,10]);
+	set(handles.Mincounts,'Enable','off');
+
 	corr_str=fieldnames(data.raw.scalars);
 	% First is special: just use index.
 	corr_str=['As taken';corr_str];
@@ -683,6 +689,13 @@ function Maxcounts_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
+maxval=int32(get(handles.Maxcounts,'Value'));
+minval=int32(get(handles.Mincounts,'Value'));
+
+if maxval <= minval
+	set(handles.Mincounts,'Value',maxval-1);
+end
+
 plotpanel(hObject,handles);
 
 
@@ -795,3 +808,85 @@ function Corrplotbutton_Callback(hObject, eventdata, handles)
 handles=corrplot(hObject,handles);
 
 guidata(hObject,handles);
+
+
+% --- Executes on slider movement.
+function Mincounts_Callback(hObject, eventdata, handles)
+% hObject    handle to Mincounts (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+maxval=int32(get(handles.Maxcounts,'Value'));
+minval=int32(get(handles.Mincounts,'Value'));
+
+if maxval <= minval
+	set(handles.Maxcounts,'Value',minval+1);
+end
+
+plotpanel(hObject,handles);
+
+% --- Executes during object creation, after setting all properties.
+function Mincounts_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to Mincounts (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on selection change in yunits.
+function yunits_Callback(hObject, eventdata, handles)
+% hObject    handle to yunits (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns yunits contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from yunits
+
+contents = cellstr(get(hObject,'String'))
+handles.yunits = contents{get(hObject,'Value')}
+plotpanel(hObject,handles);
+
+% --- Executes during object creation, after setting all properties.
+function yunits_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to yunits (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in xunits.
+function xunits_Callback(hObject, eventdata, handles)
+% hObject    handle to xunits (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns xunits contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from xunits
+
+contents = cellstr(get(hObject,'String'))
+handles.xunits = contents{get(hObject,'Value')}
+plotpanel(hObject,handles);
+
+% --- Executes during object creation, after setting all properties.
+function xunits_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to xunits (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: listbox controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end

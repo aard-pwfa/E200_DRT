@@ -1,4 +1,6 @@
 function handles=plotpanel(hObject,handles)
+	global phandles
+	phandles = handles
 	
 	% step=int32(get(handles.Stepnumberslider,'Value'));
 	% shot=int32(get(handles.Shotnumberslider,'Value'));
@@ -7,6 +9,9 @@ function handles=plotpanel(hObject,handles)
 	
 	imgnum=int32(get(handles.imageslider,'Value'));
 	maxval=int32(get(handles.Maxcounts,'Value'));
+	minval=int32(get(handles.Mincounts,'Value'));
+
+	display(maxval)
 
 	cmap=custom_cmap();
 	colormap(cmap.wbgyr);
@@ -16,10 +21,31 @@ function handles=plotpanel(hObject,handles)
 	img=rot90(img);
 	% % img=fliplr(img);
 	img=log10(double(img));
-	maxval=max(max(img));
+	display(max(max(img)));
 
-	imagesc(img,[1,maxval]);
+	if minval == 0
+		minval = 0.5;
+	end
+	imagesc(img,[log10(double(minval)),log10(double(maxval))]);
+	colorbar
 	
+	switch handles.xunits
+	case 'Millimeters'
+		imgstruct = get_imgstruct(handles);
+		res = imgstruct.RESOLUTION(imgnum);
+		[xsize,ysize] = size(img);
+		xmean = xsize/2;
+		xticks = 0:xsize/5:xsize;
+		xticklabels = (-xmean*res:xsize*res/5:xmean*res)/10^4;
+		xticklabelstr = {};
+		for i=1:size(xticklabels,2)
+			xticklabelstr = [xticklabelstr sprintf('%03.2f',xticklabels(i))];
+		end
+		display(xticklabels)
+		display(xticklabelstr)
+		set(handles.fig1,'XTick',xticks)
+		set(handles.fig1,'XTickLabel',xticklabelstr)
+	end
 	
 	% if ~strcmp(get(hObject,'tag'),'Shotnumberslider')
 	%	handles=subbgs(hObject,handles);
@@ -32,8 +58,6 @@ function handles=plotpanel(hObject,handles)
 	% else
 	%       imagesc(handles.images(:,:,shot),[0,int32(get(handles.Maxcounts,'Value'))]);
 	% end
-	
-	
 end
 
 function handles=subbgs(hObject,handles)
