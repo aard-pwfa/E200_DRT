@@ -45,53 +45,47 @@ function handles=plotpanel(hObject,handles)
 		display(xticklabelstr)
 		set(handles.fig1,'XTick',xticks)
 		set(handles.fig1,'XTickLabel',xticklabelstr)
+	case 'Energy'
+		img
+	% Determine spectrometer bend settings/calibration
+	bend_struct = data.raw.scalars.LI20_LGPS_3330_BDES;
+	bool        = ismember(wanted_UIDs,bend_struct.UID);
+	% display(bend_struct.UID)
+	B5D36 = bend_struct.dat{1};
+	% display(B5D36);
+	e_axis=E200_cher_get_E_axis('20130423','CELOSS',0,[1:1392],0,B5D36);
+		
+		[Erange, Eres, Dy] = E200_cher_get_E_axis(datename, camname, visu,  pixelrange, offset, sbend_setting)
 	end
 	
-	% if ~strcmp(get(hObject,'tag'),'Shotnumberslider')
-	%	handles=subbgs(hObject,handles);
-	%	handles=checkmaxcounts(handles);
-	%	guidata(hObject,handles);
-	% end
-	
-	% if get(handles.Usebg,'Value')
-	%       imagesc(handles.subimages(:,:,shot),[0,int32(get(handles.Maxcounts,'Value'))]);
-	% else
-	%       imagesc(handles.images(:,:,shot),[0,int32(get(handles.Maxcounts,'Value'))]);
-	% end
+	switch handles.yunits
+	case 'Millimeters'
+		imgstruct = get_imgstruct(handles);
+		res = imgstruct.RESOLUTION(imgnum);
+		[xsize,ysize] = size(img);
+		ymean = ysize/2;
+		yticks = 0:ysize/5:ysize;
+		yticklabels = (-ymean*res:ysize*res/5:ymean*res)/10^4;
+		yticklabelstr = {};
+		for i=1:size(yticklabels,2)
+			yticklabelstr = [yticklabelstr sprintf('%03.2f',yticklabels(i))];
+		end
+		display(yticklabels)
+		display(yticklabelstr)
+		set(handles.fig1,'YTick',yticks)
+		set(handles.fig1,'YTickLabel',yticklabelstr)
+	end
 end
 
 function handles=subbgs(hObject,handles)
 
 	selstr=getlistsel(handles.Cams);
 	
-	% Used to be how we subtract backgrounds.  New approach!
-	% if get(handles.Usebg,'Value')
-	%         display('here');
-	%         if ~isfield(handles,'maxsubpixel')
-	%                 display('Subtracting backgrounds...');
-	%                 handles.subimages=handles.images;
-	%                 for i=1:handles.data.raw.metadata.param.dat{1}.n_shot
-	%                         handles.subimages(:,:,i) = handles.images(:,:,i)-uint16(handles.data.raw.cam_back.(selstr).img);
-	%                 end
-	%                 handles.maxsubpixel=max(handles.subimages(:));
-	%                 display('Finished subtracting backgrounds.');
-	%         end
-	% end
-	
 	guidata(hObject,handles);
 
 end
 
 function handles=checkmaxcounts(handles)
-
-	% No usebg
-	% if get(handles.Usebg,'Value')
-	%         wantedmax=handles.maxsubpixel;
-	% else
-	%         wantedmax=handles.maxrawpixel;
-	% end
-	
-	% display(get(handles.Maxcounts,'Value'))
 	if get(handles.Maxcounts,'Max') ~= wantedmax
 		set(handles.Maxcounts,'Max',wantedmax);
 		if get(handles.Maxcounts,'Value') > wantedmax
