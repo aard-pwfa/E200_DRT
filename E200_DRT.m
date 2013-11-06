@@ -301,7 +301,8 @@ data=E200_load_data(loadfile);
 switch data.raw.metadata.settype
 	case 'scan'
 
-		n_steps=size(data.raw.metadata.scan_info,2);
+		% n_steps=size(data.raw.metadata.scan_info,2)
+		n_steps = data.raw.metadata.n_steps
 		set(handles.Stepstaken,'String',n_steps);
 		set(handles.Stepnumberslider,'Min',1);
 		set(handles.Stepnumberslider,'Max',n_steps);
