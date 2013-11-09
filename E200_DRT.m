@@ -342,12 +342,6 @@ if ~strcmp(data.raw.metadata.settype,'none')
 	set(handles.FileDate,'String',[param.year '-' param.month '-' param.day]);
 	
 	set(handles.Shotsperstep,'String',param.n_shot);
-	set(handles.Shotnumberslider,'Min',1);
-	set(handles.Shotnumberslider,'Max',param.n_shot);
-	set(handles.Shotnumberslider,'Value',1);
-	set(handles.Shotnumberslider,'SliderStep',[1/param.n_shot,10/param.n_shot]);
-	set(handles.Shotnumberslider,'Enable','off');
-	set(handles.Shotnumbertext,'String','');
 
 	set(handles.imageslider,'Min',1);
 	set(handles.imageslider,'Max',1);
@@ -560,33 +554,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on slider movement.
-function Shotnumberslider_Callback(hObject, eventdata, handles)
-% hObject    handle to Shotnumberslider (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of
-%        slider
-
-set(handles.Shotnumbertext,'String',num2str(int32(get(handles.Shotnumberslider,'Value'))))
-
-plotpanel(hObject,handles);
-
-% --- Executes during object creation, after setting all properties.
-function Shotnumberslider_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to Shotnumberslider (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-	set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-
-
-
 function Comment_Callback(hObject, eventdata, handles)
 % hObject    handle to Comment (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -634,44 +601,6 @@ end
 % --- Executes during object creation, after setting all properties.
 function Stepnumbertext_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to Stepnumbertext (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-	set(hObject,'BackgroundColor','white');
-end
-
-
-
-function Shotnumbertext_Callback(hObject, eventdata, handles)
-% hObject    handle to Shotnumbertext (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of Shotnumbertext as text
-%        str2double(get(hObject,'String')) returns contents of Shotnumbertext as a double
-
-value=str2num(get(hObject,'String'));
-value=round(value);
-
-if sum(value==[1:handles.param.n_shot])
-	
-%	 try
-%		 handles=rmfield(handles,'maxsubpixel');
-%	 end
-
-	set(handles.Shotnumberslider,'Value',value);
-	plotpanel(hObject,handles);
-else
-	error(['Input not in allowed range: 1 to ' handles.param.n_shot])
-end
-
-
-% --- Executes during object creation, after setting all properties.
-function Shotnumbertext_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to Shotnumbertext (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

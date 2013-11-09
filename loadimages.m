@@ -6,9 +6,6 @@ function handles=loadimages(hObject,handles)
 	% set(handles.Stepnumberslider,'Enable','off');
 	set(handles.Stepnumbertext,'Enable','off');
 	set(handles.Stepnumberslider,'Enable','off');
-	set(handles.Shotnumberslider,'Enable','off');
-	set(handles.Shotnumbertext,'String','');
-	set(handles.Shotnumbertext,'Enable','off');
 	set(handles.imageslider,'Enable','off');
 	set(handles.Maxcounts,'Enable','off');
 	set(handles.Mincounts,'Enable','off');
@@ -51,11 +48,6 @@ function handles=loadimages(hObject,handles)
 	set(handles.Mincounts,'Max',handles.maxrawpixel);
 	set(handles.Mincounts,'Value',0);
 	set(handles.Mincounts,'SliderStep',[0.01,0.1])
-	
-	set(handles.Shotnumberslider,'Enable','on');
-	set(handles.Shotnumberslider,'Value',1);
-	set(handles.Shotnumbertext,'String','1');
-	set(handles.Shotnumbertext,'Enable','on');
 	
 	set(handles.Stepnumberslider,'Enable','on');
 	set(handles.Stepnumbertext,'Enable','on');
