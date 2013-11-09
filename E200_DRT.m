@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 25-Oct-2013 17:01:57
+% Last Modified by GUIDE v2.5 08-Nov-2013 17:31:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -63,6 +63,7 @@ initialize_gui(hObject, handles, false);
 % uiwait(handles.figure1);
 
 addpath(fullfile(pwd,'E200_data'));
+addpath(genpath(fullfile(pwd,'aux_functions')));
 
 
 % --- Outputs from this function are returned to the command line.
@@ -891,3 +892,48 @@ function xunits_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on selection change in analysisPopup.
+function analysisPopup_Callback(hObject, eventdata, handles)
+% hObject    handle to analysisPopup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = get(hObject,'String') returns analysisPopup contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from analysisPopup
+
+
+% --- Executes during object creation, after setting all properties.
+function analysisPopup_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to analysisPopup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+addpath('analysis_panel_fxns');
+
+analysis_panel_init(hObject,handles);
+guidata(hObject, handles);
+
+global ghandles
+ghandles = handles;
+
+display(hObject)
+
+% rmpath('analysis_panel_fxns');
+
+% --- Executes on button press in analysisButton.
+function analysisButton_Callback(hObject, eventdata, handles)
+% hObject    handle to analysisButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+analysis_struct = analysis_info()
+
+analysis_struct(get(handles.analysisPopup,'Value')).func(handles)
