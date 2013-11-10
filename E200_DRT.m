@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 08-Nov-2013 17:31:38
+% Last Modified by GUIDE v2.5 09-Nov-2013 23:12:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -862,3 +862,22 @@ function analysisButton_Callback(hObject, eventdata, handles)
 analysis_struct = analysis_info()
 
 analysis_struct(get(handles.analysisPopup,'Value')).func(handles)
+
+
+% --- Executes on button press in globaldataButton.
+function globaldataButton_Callback(hObject, eventdata, handles)
+% hObject    handle to globaldataButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global gdata
+gdata = handles.data;
+
+% --- Executes on button press in globalhandlesButton.
+function globalhandlesButton_Callback(hObject, eventdata, handles)
+% hObject    handle to globalhandlesButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global ghandles
+ghandles = handles
