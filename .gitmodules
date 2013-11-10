@@ -7,3 +7,6 @@
 [submodule "aux_functions/FACET_Emittance"]
 	path = aux_functions/FACET_Emittance
 	url = ssh://git@localhost:7777/joelfrederico/FACET_Emittance.git
+[submodule "aux_functions/E200_Cam_Energy_Cal"]
+	path = aux_functions/E200_Cam_Energy_Cal
+	url = ssh://git@localhost:7777/joelfrederico/E200_Cam_Energy_Cal.git
