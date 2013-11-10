@@ -6,7 +6,7 @@ function handles=plotpanel(hObject,handles)
 	maxval=int32(get(handles.Maxcounts,'Value'));
 	minval=int32(get(handles.Mincounts,'Value'));
 
-	display(maxval)
+	% display(maxval)
 
 	cmap=custom_cmap();
 	colormap(cmap.wbgyr);
@@ -16,7 +16,7 @@ function handles=plotpanel(hObject,handles)
 	img=rot90(img);
 	% % img=fliplr(img);
 	img=log10(double(img));
-	display(max(max(img)));
+	% display(max(max(img)));
 
 	if minval == 0
 		minval = 0.5;
@@ -30,18 +30,18 @@ function handles=plotpanel(hObject,handles)
 	case 'Millimeters'
 		imgstruct = get_imgstruct(handles);
 		res = imgstruct.RESOLUTION(imgnum);
-		[ysize,xsize] = size(img)
+		[ysize,xsize] = size(img);
 		xmean = xsize/2;
-		xticks = 0:xsize/5:xsize
+		xticks = 0:xsize/5:xsize;
 		xticklabels = (-xmean*res:xsize*res/5:xmean*res)/10^3;
 		xticklabelstr = {};
 		for i=1:size(xticklabels,2)
 			xticklabelstr = [xticklabelstr sprintf('%03.2f',xticklabels(i))];
 		end
-		display(xticklabels)
-		display(xticklabelstr)
-		set(handles.fig1,'XTick',xticks)
-		set(handles.fig1,'XTickLabel',xticklabelstr)
+		% display(xticklabels)
+		% display(xticklabelstr)
+		set(handles.fig1,'XTick',xticks);
+		set(handles.fig1,'XTickLabel',xticklabelstr);
 	case 'Energy'
 		% img;
 		% Determine spectrometer bend settings/calibration
@@ -63,16 +63,16 @@ function handles=plotpanel(hObject,handles)
 		res = imgstruct.RESOLUTION(imgnum);
 		[ysize,xsize] = size(img);
 		ymean = ysize/2;
-		yticks = 0:ysize/5:ysize
+		yticks = 0:ysize/5:ysize;
 		yticklabels = (-ymean*res:ysize*res/5:ymean*res)/10^3;
 		yticklabelstr = {};
 		for i=1:size(yticklabels,2)
 			yticklabelstr = [yticklabelstr sprintf('%03.2f',yticklabels(i))];
 		end
-		display(yticklabels)
-		display(yticklabelstr)
-		set(handles.fig1,'YTick',yticks)
-		set(handles.fig1,'YTickLabel',yticklabelstr)
+		% display(yticklabels)
+		% display(yticklabelstr)
+		set(handles.fig1,'YTick',yticks);
+		set(handles.fig1,'YTickLabel',yticklabelstr);
 	end
 end
 
