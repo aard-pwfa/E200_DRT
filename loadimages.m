@@ -40,7 +40,8 @@ function handles=loadimages(hObject,handles)
 	num_img=size(handles.images,2);
 	clear images_bg;
 	clear images;
-	imagesc(handles.images{get(handles.imageslider,'Value')});
+	img_num = get(handles.imageslider,'Value');
+	imagesc(handles.images{img_num});
 	% imagesc(
 	
 	handles.maxrawpixel=maxpixel(handles.images);
