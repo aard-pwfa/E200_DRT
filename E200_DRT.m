@@ -846,11 +846,6 @@ addpath('analysis_panel_fxns');
 analysis_panel_init(hObject,handles);
 guidata(hObject, handles);
 
-global ghandles
-ghandles = handles;
-
-display(hObject)
-
 % rmpath('analysis_panel_fxns');
 
 % --- Executes on button press in analysisButton.
@@ -880,4 +875,4 @@ function globalhandlesButton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 global ghandles
-ghandles = handles
+ghandles = handles;
