@@ -780,8 +780,6 @@ function yunits_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns yunits contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from yunits
 
-contents = cellstr(get(hObject,'String'))
-handles.yunits = contents{get(hObject,'Value')}
 plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -806,8 +804,6 @@ function xunits_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns xunits contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from xunits
 
-contents = cellstr(get(hObject,'String'))
-handles.xunits = contents{get(hObject,'Value')}
 plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
