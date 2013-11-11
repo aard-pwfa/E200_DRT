@@ -288,9 +288,10 @@ hostname = strrep(hostname,sprintf('\n'),'');
 isfs20=strcmp(hostname,'facet-srv20');
 
 if isfs20
-	loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+	% loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+	loadfile=fullfile(Pathname,Filename);
 else
-	loadfile=fullfile(Pathname,Filename)
+	loadfile=fullfile(Pathname,Filename);
 end
 
 % gl.loadfile=loadfile;
@@ -864,8 +865,13 @@ function globaldataButton_Callback(hObject, eventdata, handles)
 % hObject    handle to globaldataButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
 global gdata
+filestr = get(handles.currentfile,'String');
+
+display('================================================================');
+display('Data structure saved to global variable "gdata".');
+display(sprintf('Load data with command:\ndata = E200_load_data(''%s'')',filestr));
+display('================================================================');
 gdata = handles.data;
 
 % --- Executes on button press in globalhandlesButton.
@@ -876,3 +882,7 @@ function globalhandlesButton_Callback(hObject, eventdata, handles)
 
 global ghandles
 ghandles = handles;
+
+display('================================================================');
+display('Handles structure saved to global variable "ghandles".');
+display('================================================================');
