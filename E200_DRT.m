@@ -866,13 +866,17 @@ function globaldataButton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global gdata
+gdata = handles.data;
+
 filestr = get(handles.currentfile,'String');
 
-display('================================================================');
-display('Data structure saved to global variable "gdata".');
-display(sprintf('Load data with command:\ndata = E200_load_data(''%s'')',filestr));
-display('================================================================');
-gdata = handles.data;
+rgbvec = [0,0.7,0];
+
+printstr = '================================================================\n';
+printstr = [printstr 'Data structure saved to global variable "gdata".\n'];
+printstr = [printstr sprintf('Load data with command:\ndata = E200_load_data(''%s'')\n',filestr)];
+printstr = [printstr '================================================================\n'];
+cprintf(rgbvec,printstr);
 
 % --- Executes on button press in globalhandlesButton.
 function globalhandlesButton_Callback(hObject, eventdata, handles)
@@ -883,6 +887,9 @@ function globalhandlesButton_Callback(hObject, eventdata, handles)
 global ghandles
 ghandles = handles;
 
-display('================================================================');
-display('Handles structure saved to global variable "ghandles".');
-display('================================================================');
+rgbvec = [0,0.7,0];
+
+printstr = '================================================================\n';
+printstr = [printstr 'Handles structure saved to global variable "ghandles".\n'];
+printstr = [printstr '================================================================\n'];
+cprintf(rgbvec,printstr)
