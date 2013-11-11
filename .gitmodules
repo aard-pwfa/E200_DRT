@@ -10,3 +10,6 @@
 [submodule "aux_functions/E200_Cam_Energy_Cal"]
 	path = aux_functions/E200_Cam_Energy_Cal
 	url = ssh://git@localhost:7777/joelfrederico/E200_Cam_Energy_Cal.git
+[submodule "aux_functions/MatlabScripts"]
+	path = aux_functions/MatlabScripts
+	url = ssh://git@localhost:7777/joelfrederico/MatlabScripts.git
