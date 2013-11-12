@@ -2,7 +2,7 @@
 	path = E200_data
 	url = ssh://git@localhost:7777/aard-pwfa/E200_data.git
 [submodule "aux_functions/Butterfly"]
-	path = aux_functions/Butterfly
+	path = aux_functions/ButterflyEmittancePython
 	url = ssh://git@localhost:7777/joelfrederico/ButterflyEmittancePython.git
 [submodule "aux_functions/FACET_Emittance"]
 	path = aux_functions/FACET_Emittance
