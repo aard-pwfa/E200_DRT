@@ -3,4 +3,5 @@
 *.swo
 *.log
 *.swn
+*.mat
 java.opts
