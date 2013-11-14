@@ -884,12 +884,11 @@ function globalhandlesButton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-global ghandles
-ghandles = handles;
+global handles
 
 rgbvec = [0,0.7,0];
 
 printstr = '================================================================\n';
-printstr = [printstr 'Handles structure saved to global variable "ghandles".\n'];
+printstr = [printstr 'Handles structure saved to global variable "handles".\n'];
 printstr = [printstr '================================================================\n'];
 cprintf(rgbvec,printstr)

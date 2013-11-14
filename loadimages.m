@@ -36,13 +36,15 @@ function handles=loadimages(hObject,handles)
 	display(['Loading images, expect ' num2str(handles.data.raw.metadata.param.dat{1}.n_shot*15/100) ' second wait...']);
 	% [handles.images,handles.images_bg]=E200_load_images(imgstruct,wanted_UID_step);
 	[images,images_bg]=E200_load_images(imgstruct,wanted_UID_step);
-	handles.images=images;
+	for i = 1:size(images,1)
+		images{i} = images{i}-uint16(images_bg{i});
+	end
+	handles.images = images;
 	num_img=size(handles.images,2);
 	clear images_bg;
 	clear images;
 	img_num = get(handles.imageslider,'Value');
 	imagesc(handles.images{img_num});
-	% imagesc(
 	
 	handles.maxrawpixel=maxpixel(handles.images);
 
