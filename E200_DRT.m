@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 08-Nov-2013 17:31:38
+% Last Modified by GUIDE v2.5 09-Nov-2013 23:12:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -287,9 +287,10 @@ hostname = strrep(hostname,sprintf('\n'),'');
 isfs20=strcmp(hostname,'facet-srv20');
 
 if isfs20
-	loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+	% loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
+	loadfile=fullfile(Pathname,Filename);
 else
-	loadfile=fullfile(Pathname,Filename)
+	loadfile=fullfile(Pathname,Filename);
 end
 
 % gl.loadfile=loadfile;
@@ -779,8 +780,6 @@ function yunits_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns yunits contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from yunits
 
-contents = cellstr(get(hObject,'String'))
-handles.yunits = contents{get(hObject,'Value')}
 plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -805,8 +804,6 @@ function xunits_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns xunits contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from xunits
 
-contents = cellstr(get(hObject,'String'))
-handles.xunits = contents{get(hObject,'Value')}
 plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -849,11 +846,6 @@ addpath('analysis_panel_fxns');
 analysis_panel_init(hObject,handles);
 guidata(hObject, handles);
 
-global ghandles
-ghandles = handles;
-
-display(hObject)
-
 % rmpath('analysis_panel_fxns');
 
 % --- Executes on button press in analysisButton.
@@ -865,3 +857,37 @@ function analysisButton_Callback(hObject, eventdata, handles)
 analysis_struct = analysis_info()
 
 analysis_struct(get(handles.analysisPopup,'Value')).func(handles)
+
+
+% --- Executes on button press in globaldataButton.
+function globaldataButton_Callback(hObject, eventdata, handles)
+% hObject    handle to globaldataButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global gdata
+gdata = handles.data;
+
+filestr = get(handles.currentfile,'String');
+
+rgbvec = [0,0.7,0];
+
+printstr = '================================================================\n';
+printstr = [printstr 'Data structure saved to global variable "gdata".\n'];
+printstr = [printstr sprintf('Load data with command:\ndata = E200_load_data(''%s'')\n',filestr)];
+printstr = [printstr '================================================================\n'];
+cprintf(rgbvec,printstr);
+
+% --- Executes on button press in globalhandlesButton.
+function globalhandlesButton_Callback(hObject, eventdata, handles)
+% hObject    handle to globalhandlesButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global handles
+
+rgbvec = [0,0.7,0];
+
+printstr = '================================================================\n';
+printstr = [printstr 'Handles structure saved to global variable "handles".\n'];
+printstr = [printstr '================================================================\n'];
+cprintf(rgbvec,printstr)
