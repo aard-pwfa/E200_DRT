@@ -1,3 +1,15 @@
 [submodule "E200_data"]
 	path = E200_data
 	url = git@github.com:aard-pwfa/E200_data.git
+[submodule "aux_functions/ButterflyEmittancePython"]
+	path = aux_functions/ButterflyEmittancePython
+	url = git@github.com:joelfrederico/ButterflyEmittancePython.git
+[submodule "aux_functions/FACET_Emittance"]
+	path = aux_functions/FACET_Emittance
+	url = git@github.com:joelfrederico/FACET_Emittance.git
+[submodule "aux_functions/E200_Cam_Energy_Cal"]
+	path = aux_functions/E200_Cam_Energy_Cal
+	url = git@github.com:joelfrederico/E200_Cam_Energy_Cal.git
+[submodule "aux_functions/MatlabScripts"]
+	path = aux_functions/MatlabScripts
+	url = git@github.com:joelfrederico/MatlabScripts.git
