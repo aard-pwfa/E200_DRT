@@ -54,7 +54,7 @@ function handles=loadimages(hObject,handles)
 	set(handles.Maxcounts,'SliderStep',[0.01,0.1])
 
 	set(handles.Mincounts,'Enable','on');
-	set(handles.Mincounts,'Max',handles.maxrawpixel);
+	set(handles.Mincounts,'Max',handles.maxrawpixel-1);
 	set(handles.Mincounts,'Value',0);
 	set(handles.Mincounts,'SliderStep',[0.01,0.1])
 	

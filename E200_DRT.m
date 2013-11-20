@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 15-Nov-2013 16:39:13
+% Last Modified by GUIDE v2.5 20-Nov-2013 14:53:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -529,11 +529,12 @@ function Stepnumberslider_Callback(hObject, eventdata, handles)
 
 % global gl
 
-set(handles.Stepnumbertext,'String',num2str(int32(get(handles.Stepnumberslider,'Value'))))
+value = get(hObject,'Value');
+setslider(value,handles.Stepnumberslider,handles.Stepnumbertext);
 
-try
-	handles=rmfield(handles,'maxsubpixel');
-end
+% try
+%         handles=rmfield(handles,'maxsubpixel');
+% end
 handles = loadimages(hObject,handles);
 plotpanel(hObject,handles);
 
@@ -585,17 +586,14 @@ function Stepnumbertext_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of Stepnumbertext as text
 %        str2double(get(hObject,'String')) returns contents of Stepnumbertext as a double
 
-value=str2num(get(hObject,'String'));
-value=round(value);
+value=str2double(get(hObject,'String'));
+setslider(value,handles.Stepnumberslider,handles.Stepnumbertext);
 
-if sum(value==[1:handles.scan.n_steps])
-	set(handles.Stepnumberslider,'Value',value);
-	handles = loadimages(hObject,handles);
-	plotpanel(hObject,handles);
-else
-	error(['Input not in allowed range: 1 to ' handles.scan.n_steps])
-end
-
+% try
+%         handles=rmfield(handles,'maxsubpixel');
+% end
+handles = loadimages(hObject,handles);
+plotpanel(hObject,handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -620,12 +618,10 @@ function Maxcounts_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
-maxval=int32(get(handles.Maxcounts,'Value'));
-minval=int32(get(handles.Mincounts,'Value'));
+value = get(hObject,'Value');
+setslider(value,handles.Maxcounts,handles.MaxcountsText);
 
-if maxval <= minval
-	set(handles.Mincounts,'Value',maxval-1);
-end
+fix_max_min_values('min',handles);
 
 plotpanel(hObject,handles);
 
@@ -667,6 +663,9 @@ function imageslider_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+value = get(hObject,'Value');
+setslider(value,handles.imageslider,handles.imagesliderText);
 
 plotpanel(hObject,handles);
 
@@ -750,14 +749,10 @@ function Mincounts_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
-maxval=int32(get(handles.Maxcounts,'Value'));
-minval=int32(get(handles.Mincounts,'Value'));
+value = get(hObject,'Value');
+setslider(value,handles.Mincounts,handles.MincountsText);
 
-set(handles.Stepnumbertext,'String',num2str(int32(get(handles.Stepnumberslider,'Value'))))
-
-if maxval <= minval
-	set(handles.Maxcounts,'Value',minval+1);
-end
+fix_max_min_values('max',handles);
 
 plotpanel(hObject,handles);
 
@@ -904,6 +899,10 @@ function imagesliderText_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of imagesliderText as text
 %        str2double(get(hObject,'String')) returns contents of imagesliderText as a double
 
+value = str2double(get(hObject,'String'))
+setslider(value,handles.imageslider,handles.imagesliderText);
+
+plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function imagesliderText_CreateFcn(hObject, eventdata, handles)
@@ -927,6 +926,12 @@ function MincountsText_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of MincountsText as text
 %        str2double(get(hObject,'String')) returns contents of MincountsText as a double
 
+value = str2double(get(hObject,'String'));
+setslider(value,handles.Mincounts,handles.MincountsText);
+
+fix_max_min_values('max',handles);
+
+plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function MincountsText_CreateFcn(hObject, eventdata, handles)
@@ -950,6 +955,12 @@ function MaxcountsText_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of MaxcountsText as text
 %        str2double(get(hObject,'String')) returns contents of MaxcountsText as a double
 
+value = str2double(get(hObject,'String'));
+setslider(value,handles.Maxcounts,handles.MaxcountsText);
+
+fix_max_min_values('min',handles);
+
+plotpanel(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function MaxcountsText_CreateFcn(hObject, eventdata, handles)
@@ -962,5 +973,3 @@ function MaxcountsText_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-

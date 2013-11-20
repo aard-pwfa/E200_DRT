@@ -15,13 +15,14 @@ function handles=plotpanel(hObject,handles)
 	img=handles.images{imgnum};
 	img=rot90(img);
 	% % img=fliplr(img);
-	img=log10(double(img));
+	% img=log10(double(img));
 	% display(max(max(img)));
 
 	if minval == 0
 		minval = 0.5;
 	end
-	imagesc(img,[log10(double(minval)),log10(double(maxval))]);
+	% imagesc(img,[log10(double(minval)),log10(double(maxval))]);
+	imagesc(img,[double(minval),double(maxval)]);
 	colorbar
 	
 	contents = cellstr(get(handles.xunits,'String'));
