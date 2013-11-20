@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 09-Nov-2013 23:12:46
+% Last Modified by GUIDE v2.5 15-Nov-2013 16:39:13
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -753,6 +753,8 @@ function Mincounts_Callback(hObject, eventdata, handles)
 maxval=int32(get(handles.Maxcounts,'Value'));
 minval=int32(get(handles.Mincounts,'Value'));
 
+set(handles.Stepnumbertext,'String',num2str(int32(get(handles.Stepnumberslider,'Value'))))
+
 if maxval <= minval
 	set(handles.Maxcounts,'Value',minval+1);
 end
@@ -891,3 +893,74 @@ printstr = '================================================================\n';
 printstr = [printstr 'Handles structure saved to global variable "handles".\n'];
 printstr = [printstr '================================================================\n'];
 cprintf(rgbvec,printstr)
+
+
+
+function imagesliderText_Callback(hObject, eventdata, handles)
+% hObject    handle to imagesliderText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of imagesliderText as text
+%        str2double(get(hObject,'String')) returns contents of imagesliderText as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function imagesliderText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to imagesliderText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function MincountsText_Callback(hObject, eventdata, handles)
+% hObject    handle to MincountsText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of MincountsText as text
+%        str2double(get(hObject,'String')) returns contents of MincountsText as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function MincountsText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to MincountsText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function MaxcountsText_Callback(hObject, eventdata, handles)
+% hObject    handle to MaxcountsText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of MaxcountsText as text
+%        str2double(get(hObject,'String')) returns contents of MaxcountsText as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function MaxcountsText_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to MaxcountsText (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
