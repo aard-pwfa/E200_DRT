@@ -880,7 +880,11 @@ function globalhandlesButton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+% If "handles" is already global,
+% this may overwrite handles with the global value.
+temp = handles;
 global handles
+handles = temp;
 
 rgbvec = [0,0.7,0];
 
