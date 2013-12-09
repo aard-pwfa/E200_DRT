@@ -56,12 +56,12 @@ function handles=plotpanel(hObject,handles)
 		datatype  = handles.CamsLookup.datatype{camind};
 		name      = handles.CamsLookup.name{camind};
 
-		e_axis=E200_cher_get_E_axis('20131125',name,0,[1:1392],0,B5D36)
+		e_axis=E200_cher_get_E_axis('20131125',name,0,[1:1392],0,B5D36);
 
 		[ysize,xsize] = size(img);
 		
 		xticks = 0:xsize/5:xsize;
-		xticklabels = e_axis(xticks+1)
+		xticklabels = e_axis(xticks+1);
 		xticklabelstr = {};
 		for i=1:size(xticklabels,2)
 			xticklabelstr = [xticklabelstr sprintf('%03.2f',xticklabels(i))];
