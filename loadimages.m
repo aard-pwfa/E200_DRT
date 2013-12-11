@@ -22,12 +22,12 @@ function handles=loadimages(hObject,handles)
 	if allsteps
 		wanted_UID_step=data.raw.scalars.step_num.UID;
 	else
-		stepval=get(handles.Stepnumberslider,'Value')
+		stepval=get(handles.Stepnumberslider,'Value');
 		% Seem to need this if running a single step
 		% instead of a scan. May be related to disabling
 		% Stepnumberslider in GUI
 		if stepval == 0
-			stepval = 1
+			stepval = 1;
 		end
 		bool=(data.raw.scalars.step_num.dat==stepval);
 		wanted_UID_step=data.raw.scalars.step_num.UID(bool);
