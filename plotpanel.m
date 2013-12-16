@@ -92,23 +92,3 @@ function handles=plotpanel(hObject,handles)
 		set(handles.fig1,'YTickLabel',yticklabelstr);
 	end
 end
-
-function handles=subbgs(hObject,handles)
-
-	selstr=getlistsel(handles.Cams);
-	
-	guidata(hObject,handles);
-
-end
-
-function handles=checkmaxcounts(handles)
-	if get(handles.Maxcounts,'Max') ~= wantedmax
-		set(handles.Maxcounts,'Max',wantedmax);
-		if get(handles.Maxcounts,'Value') > wantedmax
-			set(handles.Maxcounts,'Value',wantedmax);
-		end
-		% set(handles.Maxcounts,'SliderStep',[1/wantedmax,10/wantedmax]);
-		set(handles.Maxcounts,'Enable','on');
-	end
-	
-end
