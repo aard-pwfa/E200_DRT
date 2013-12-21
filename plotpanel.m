@@ -21,6 +21,7 @@ function handles=plotpanel(hObject,handles)
 	if minval == 0
 		minval = 0.5;
 	end
+
 	% imagesc(img,[log10(double(minval)),log10(double(maxval))]);
 	imagesc(img,[double(minval),double(maxval)]);
 	colorbar
@@ -33,7 +34,8 @@ function handles=plotpanel(hObject,handles)
 		res = imgstruct.RESOLUTION(imgnum);
 		[ysize,xsize] = size(img);
 		xmean = xsize/2;
-		xticks = 0:xsize/5:xsize;
+		% xticks = 0:xsize/5:xsize;
+		xticks = linspace(1,xsize,6);
 		xticklabels = (-xmean*res:xsize*res/5:xmean*res)/10^3;
 		xticklabelstr = {};
 		for i=1:size(xticklabels,2)
@@ -55,13 +57,17 @@ function handles=plotpanel(hObject,handles)
 		camind    = get(handles.Cams,'Value');
 		datatype  = handles.CamsLookup.datatype{camind};
 		name      = handles.CamsLookup.name{camind};
+		if strcmp(name,'CMOS_FAR')
+			name = 'CMOS';
+		end
 
-		e_axis=E200_cher_get_E_axis('20131125',name,0,[1:1392],0,B5D36);
+		e_axis=E200_cher_get_E_axis('20131125',name,0,[1:size(img,2)],0,B5D36);
 
 		[ysize,xsize] = size(img);
 		
-		xticks = 0:xsize/5:xsize;
-		xticklabels = e_axis(xticks+1);
+		% xticks = 0:xsize/5:xsize;
+		xticks = linspace(1,xsize,6);
+		xticklabels = e_axis(round(xticks));
 		xticklabelstr = {};
 		for i=1:size(xticklabels,2)
 			xticklabelstr = [xticklabelstr sprintf('%03.2f',xticklabels(i))];
@@ -80,7 +86,8 @@ function handles=plotpanel(hObject,handles)
 		res = imgstruct.RESOLUTION(imgnum);
 		[ysize,xsize] = size(img);
 		ymean = ysize/2;
-		yticks = 0:ysize/5:ysize;
+		% yticks = 0:ysize/5:ysize;
+		yticks = linspace(1,ysize,6);
 		yticklabels = (-ymean*res:ysize*res/5:ymean*res)/10^3;
 		yticklabelstr = {};
 		for i=1:size(yticklabels,2)
@@ -90,6 +97,38 @@ function handles=plotpanel(hObject,handles)
 		% display(yticklabelstr)
 		set(handles.fig1,'YTick',yticks);
 		set(handles.fig1,'YTickLabel',yticklabelstr);
+	case 'Energy'
+		% img;
+		% Determine spectrometer bend settings/calibration
+		bend_struct = data.raw.scalars.LI20_LGPS_3330_BDES;
+		% bool        = ismember(wanted_UIDs,bend_struct.UID);
+		% display(bend_struct.UID)
+		B5D36 = bend_struct.dat{1};
+		
+		% Get imgstruct for current options.
+		camind    = get(handles.Cams,'Value');
+		datatype  = handles.CamsLookup.datatype{camind};
+		name      = handles.CamsLookup.name{camind};
+		if strcmp(name,'CMOS_FAR')
+			name = 'CMOS'
+		end
+
+		display('Getting E axis...');
+		e_axis=E200_cher_get_E_axis('20131116',name,0,[1:size(img,1)],0,B5D36);
+		display('Finished getting E axis.');
+
+		[ysize,xsize] = size(img);
+		
+		yticks = linspace(1,ysize,6);
+		yticklabels = e_axis(round(yticks));
+		yticklabelstr = {};
+		for i=1:size(yticklabels,2)
+			yticklabelstr = [yticklabelstr sprintf('%03.2f',yticklabels(i))];
+		end
+		set(handles.fig1,'YTick',yticks);
+		set(handles.fig1,'YTickLabel',yticklabelstr);
+
+		% [Erange, Eres, Dy] = E200_cher_get_E_axis(datename, camname, visu,  pixelrange, offset, sbend_setting)
 	end
 end
 
