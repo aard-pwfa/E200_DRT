@@ -313,7 +313,7 @@ switch data.raw.metadata.settype
 		set(handles.Stepnumbertext,'String',1);
 		set(handles.Stepnumbertext,'Enable','on');
 
-		handles.scan.scan_info=data.raw.metadata.scan_info;
+		% handles.scan.scan_info=data.raw.metadata.scan_info;
 		handles.scan.n_steps=n_steps;
 		
 	case 'daq'
