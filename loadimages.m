@@ -1,4 +1,5 @@
 function handles=loadimages(hObject,handles)
+	display('this');
 	% global gl
 	
 	% Disable things while loading
@@ -14,6 +15,7 @@ function handles=loadimages(hObject,handles)
 	data=handles.data;
 	
 	imgstruct=get_imgstruct(handles);
+	handles.imgstruct=imgstruct;
 	
 	allsteps=get(handles.allsteps,'Value');
 	allshots=get(handles.allshots,'Value');
@@ -43,8 +45,6 @@ function handles=loadimages(hObject,handles)
 	num_img=size(handles.images,2);
 	clear images_bg;
 	clear images;
-	img_num = get(handles.imageslider,'Value');
-	imagesc(handles.images{img_num});
 	
 	handles.maxrawpixel=maxpixel(handles.images);
 

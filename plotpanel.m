@@ -13,7 +13,7 @@ function handles=plotpanel(hObject,handles)
 
 	% img=handles.images{imgnum}-uint16(handles.images_bg{imgnum});
 	img=handles.images{imgnum};
-	img=rot90(img);
+	% img=rot90(img);
 	% % img=fliplr(img);
 	% img=log10(double(img));
 	% display(max(max(img)));
@@ -22,8 +22,19 @@ function handles=plotpanel(hObject,handles)
 		minval = 0.5;
 	end
 	% imagesc(img,[log10(double(minval)),log10(double(maxval))]);
+	if handles.imgstruct.X_ORIENT(imgnum)
+		img=fliplr(img);
+	end
+	if handles.imgstruct.Y_ORIENT(imgnum)
+		img=flipud(img);
+	end
 	imagesc(img,[double(minval),double(maxval)]);
 	colorbar
+
+	if get(handles.zoombox,'Value')
+		set(gca,'XLim',0.5+handles.imgstruct.ROI_X(imgnum)+[0, handles.imgstruct.ROI_XNP(imgnum)]);
+		set(gca,'YLim',0.5+handles.imgstruct.ROI_Y(imgnum)+[0, handles.imgstruct.ROI_YNP(imgnum)]);
+	end
 	
 	contents = cellstr(get(handles.xunits,'String'));
 	xunitsStr = contents{get(handles.xunits,'Value')};
