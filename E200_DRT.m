@@ -195,7 +195,7 @@ end
 % gl.loadfile=loadfile;
 % loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
 
-data=E200_load_data(loadfile,handles.expstr);
+data=E200_load_data(loadfile,get(handles.expstrbox,'String'));
 % display(data.VersionInfo.Version);
 
 switch data.raw.metadata.settype
