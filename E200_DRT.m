@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 21-Mar-2014 18:54:43
+% Last Modified by GUIDE v2.5 24-Mar-2014 18:01:51
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -50,6 +50,13 @@ function E200_DRT_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to E200_DRT (see VARARGIN)
+
+if nargin>3
+	handles.expstr=varargin{1};
+else
+	handles.expstr='E200';
+end
+set(handles.expstrbox,'String',handles.expstr);
 
 % Choose default command line output for E200_DRT
 handles.output = hObject;
@@ -116,7 +123,7 @@ function OpenDataset_Callback(hObject, eventdata, handles)
 
 % Extract most recent file location
 prefix=get_remoteprefix();
-searchpath = fullfile(prefix,'/nas/nas-li20-pm01/E200/');
+searchpath = fullfile(prefix,['/nas/nas-li20-pm01/' get(handles.expstrbox,'String') '/']);
 dirs       = dir(searchpath);
 % Convert to structure
 dirs=struct2cell(dirs);
@@ -188,7 +195,7 @@ end
 % gl.loadfile=loadfile;
 % loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
 
-data=E200_load_data(loadfile);
+data=E200_load_data(loadfile,handles.expstr);
 % display(data.VersionInfo.Version);
 
 switch data.raw.metadata.settype
@@ -890,5 +897,73 @@ function printbutton_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to printbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in print2elog.
+function print2elog_Callback(hObject, eventdata, handles)
+% hObject    handle to print2elog (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+fig=figure();
+ax=axes();
+[img,imgnum]=img2plot(handles);
+
+xlim_main=get(handles.fig1,'XLim');
+ylim_main=get(handles.fig1,'YLim');
+set(ax,'XLim',xlim_main);
+set(ax,'YLim',ylim_main);
+
+prompt    = {'Title','X Label','Y Label','Elog Title','Comment to Print'};
+dlg_title = 'Plot Details';
+num_lines = [1,30;1,20;1,20;1,30;10,50];
+
+[temp,camname] = get_imgstruct(handles);
+comment        = get(handles.Comment,'String');
+comment = flattenstringrows(comment);
+dataset        = handles.data.raw.metadata.param.dat{1}.save_name;
+comment2print  = sprintf(['Dataset: ' dataset '\n' comment]);
+def            = {camname,'','',['DRT Data from ' camname],comment2print};
+
+result=inputdlg(prompt,dlg_title,num_lines,def);
+comment2print = flattenstringrows(result{5})
+% comment2print = cellstr(result{5});
+% temp = ''
+% for i=1:numel(comment2print)-1
+%         temp = [temp comment2print{i} '\n'];
+% end
+% temp = [temp comment2print{end}];
+% comment2print=temp;
+
+addlabels(result{2},result{3},result{1});
+
+printans=questdlg(sprintf(['Comment: \n\n' comment2print '\n\nPrint to Elog?']),'Final Confirmation','Yes','No','No');
+if strcmp(printans,'Yes')
+	authstr=handles.data.raw.metadata.param.dat{1}.experiment;
+	util_printLog(fig,'title',result{4},'text',sprintf(comment2print),'author',authstr);
+end
+
+
+
+function expstrbox_Callback(hObject, eventdata, handles)
+% hObject    handle to expstrbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of expstrbox as text
+%        str2double(get(hObject,'String')) returns contents of expstrbox as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function expstrbox_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to expstrbox (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
 
 

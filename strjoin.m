@@ -45,7 +45,7 @@ function joinedStr = strjoin(c, aDelim)
 
 %   Copyright 2012 The MathWorks, Inc.
 
-narginchk(1, 2);
+% narginchk(1, 2);
 
 % Check input arguments.
 if ~isCellString(c)

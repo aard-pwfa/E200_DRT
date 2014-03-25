@@ -1,5 +1,4 @@
 function handles=loadimages(hObject,handles)
-	display('this');
 	% global gl
 	
 	% Disable things while loading
@@ -39,6 +38,7 @@ function handles=loadimages(hObject,handles)
 	% [handles.images,handles.images_bg]=E200_load_images(imgstruct,wanted_UID_step);
 	[images,images_bg]=E200_load_images(imgstruct,wanted_UID_step);
 	for i = 1:size(images,1)
+		disp(i);
 		images{i} = images{i}-uint16(images_bg{i});
 	end
 	handles.images = images;
