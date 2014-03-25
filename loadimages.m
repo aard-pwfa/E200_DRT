@@ -41,10 +41,13 @@ function handles=loadimages(hObject,handles)
 		disp(i);
 		images{i} = images{i}-uint16(images_bg{i});
 	end
-	handles.images = images;
-	num_img=size(handles.images,2);
 	clear images_bg;
+	handles.images = images;
 	clear images;
+	num_img=size(handles.images,2);
+	[ylim,xlim]=size(handles.images{1});
+	set(gca,'XLim',0.5+[0,xlim]);
+	set(gca,'YLim',0.5+[0,ylim]);
 	
 	handles.maxrawpixel=maxpixel(handles.images);
 

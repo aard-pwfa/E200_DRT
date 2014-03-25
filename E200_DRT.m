@@ -885,6 +885,18 @@ function zoombox_Callback(hObject, eventdata, handles)
 
 plotpanel(hObject,handles);
 
+if get(handles.zoombox,'Value')
+	roixnp = handles.imgstruct.ROI_XNP(imgnum);
+	roiynp = handles.imgstruct.ROI_YNP(imgnum);
+	if roixnp == 0 || roiynp == 0
+		warning(['ROI not valid! ROI_XNP=' num2str(roixnp) ' ROI_YNP=' num2str(roiynp)]);
+	else
+		set(gca,'XLim',0.5+handles.imgstruct.ROI_X(imgnum)+[0, handles.imgstruct.ROI_XNP(imgnum)]);
+		set(gca,'YLim',0.5+handles.imgstruct.ROI_Y(imgnum)+[0, handles.imgstruct.ROI_YNP(imgnum)]);
+	end
+end
+
+
 % --------------------------------------------------------------------
 function toolbarsave_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to toolbarsave (see GCBO)

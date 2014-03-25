@@ -1,19 +1,15 @@
 function handles=plotpanel(hObject,handles)
 	data = handles.data;
 	axes(handles.fig1);
+
+	xlim_main = get(gca,'XLim');
+	ylim_main = get(gca,'YLim');
 	
 	[img,imgnum]=img2plot(handles);
 
-	if get(handles.zoombox,'Value')
-		roixnp = handles.imgstruct.ROI_XNP(imgnum);
-		roiynp = handles.imgstruct.ROI_YNP(imgnum);
-		if roixnp == 0 || roiynp == 0
-			warning(['ROI not valid! ROI_XNP=' num2str(roixnp) ' ROI_YNP=' num2str(roiynp)]);
-		else
-			set(gca,'XLim',0.5+handles.imgstruct.ROI_X(imgnum)+[0, handles.imgstruct.ROI_XNP(imgnum)]);
-			set(gca,'YLim',0.5+handles.imgstruct.ROI_Y(imgnum)+[0, handles.imgstruct.ROI_YNP(imgnum)]);
-		end
-	end
+	zoom(gcf,'reset');
+	set(gca,'XLim',xlim_main);
+	set(gca,'YLim',ylim_main);
 	
 	contents = cellstr(get(handles.xunits,'String'));
 	xunitsStr = contents{get(handles.xunits,'Value')};
