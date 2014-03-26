@@ -8,12 +8,8 @@ function [img,imgnum]=img2plot(handles)
 	cmap=custom_cmap();
 	colormap(cmap.wbgyr);
 
-	% img=handles.images{imgnum}-uint16(handles.images_bg{imgnum});
-	img=handles.images{imgnum};
-	% img=rot90(img);
-	% % img=fliplr(img);
-	% img=log10(double(img));
-	% display(max(max(img)));
+	[img,img_bg] = E200_load_images(handles.imgstruct,handles.wanted_UID_step(imgnum));
+	img = img{1}-uint16(img_bg{1});
 
 	if minval == 0
 		minval = 0.5;

@@ -33,23 +33,28 @@ function handles=loadimages(hObject,handles)
 		bool=(data.raw.scalars.step_num.dat==stepval);
 		wanted_UID_step=data.raw.scalars.step_num.UID(bool);
 	end
+	handles.wanted_UID_step=wanted_UID_step;
 	
 	display(['Loading images, expect ' num2str(handles.data.raw.metadata.param.dat{1}.n_shot*15/100) ' second wait...']);
-	% [handles.images,handles.images_bg]=E200_load_images(imgstruct,wanted_UID_step);
-	[images,images_bg]=E200_load_images(imgstruct,wanted_UID_step);
-	for i = 1:size(images,1)
-		disp(i);
-		images{i} = images{i}-uint16(images_bg{i});
+	[image,images_bg]=E200_load_images(imgstruct,wanted_UID_step(1));
+	num_img=size(wanted_UID_step,2)
+	handles.maxrawpixel = 0;
+	for i = 1:num_img
+		if mod(i,10)==0
+			disp(['Loading image ' num2str(i) ' of ' num2str(num_img) '...']);
+		end
+		image = E200_load_images(imgstruct,wanted_UID_step(i));
+		image = image{1}-uint16(images_bg{1});
+		maxpx = max(max(image));
+		if maxpx > handles.maxrawpixel
+			handles.maxrawpixel = maxpx;
+		end
 	end
-	clear images_bg;
-	handles.images = images;
-	clear images;
-	num_img=size(handles.images,2);
-	[ylim,xlim]=size(handles.images{1});
+	[ylim,xlim]=size(image);
 	set(gca,'XLim',0.5+[0,xlim]);
 	set(gca,'YLim',0.5+[0,ylim]);
 	
-	handles.maxrawpixel=maxpixel(handles.images);
+	% handles.maxrawpixel=maxpixel(handles.images);
 
 	set(handles.Maxcounts,'Enable','on');
 	set(handles.Maxcounts,'Max',handles.maxrawpixel);
