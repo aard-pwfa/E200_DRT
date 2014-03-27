@@ -33,6 +33,13 @@ function handles=loadimages(hObject,handles)
 		bool=(data.raw.scalars.step_num.dat==stepval);
 		wanted_UID_step=data.raw.scalars.step_num.UID(bool);
 	end
+
+	numimg=numel(wanted_UID_step)
+	if numimg > 50
+		cprintf('Red',['Number of images is ' num2str(numimg) '! Only accessing first 50.\n']);
+		wanted_UID_step = wanted_UID_step(1:50);
+		numimg=50;
+	end
 	
 	display(['Loading images, expect ' num2str(handles.data.raw.metadata.param.dat{1}.n_shot*15/100) ' second wait...']);
 	% [handles.images,handles.images_bg]=E200_load_images(imgstruct,wanted_UID_step);
