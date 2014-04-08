@@ -123,7 +123,7 @@ function OpenDataset_Callback(hObject, eventdata, handles)
 
 % Extract most recent file location
 prefix=get_remoteprefix();
-searchpath = fullfile(prefix,['/nas/nas-li20-pm01/' get(handles.expstrbox,'String') '/']);
+searchpath = fullfile(prefix,['/nas/nas-li20-pm00/' get(handles.expstrbox,'String') '/']);
 dirs       = dir(searchpath);
 % Convert to structure
 dirs=struct2cell(dirs);
