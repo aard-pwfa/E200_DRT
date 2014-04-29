@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 24-Mar-2014 18:01:51
+% Last Modified by GUIDE v2.5 27-Apr-2014 17:08:33
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -349,7 +349,8 @@ end
 
 set(handles.imageslider,'Value',1);
 handles=loadimages(hObject,handles);
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -435,7 +436,8 @@ setslider(value,handles.Stepnumberslider,handles.Stepnumbertext);
 %         handles=rmfield(handles,'maxsubpixel');
 % end
 handles = loadimages(hObject,handles);
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % gl.handles=handles;
 
@@ -492,7 +494,8 @@ setslider(value,handles.Stepnumberslider,handles.Stepnumbertext);
 %         handles=rmfield(handles,'maxsubpixel');
 % end
 handles = loadimages(hObject,handles);
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -522,7 +525,8 @@ setslider(value,handles.Maxcounts,handles.MaxcountsText);
 
 fix_max_min_values('min',handles);
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -566,7 +570,8 @@ function imageslider_Callback(hObject, eventdata, handles)
 value = get(hObject,'Value');
 setslider(value,handles.imageslider,handles.imagesliderText);
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -653,7 +658,8 @@ setslider(value,handles.Mincounts,handles.MincountsText);
 
 fix_max_min_values('max',handles);
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function Mincounts_CreateFcn(hObject, eventdata, handles)
@@ -676,7 +682,8 @@ function yunits_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns yunits contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from yunits
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function yunits_CreateFcn(hObject, eventdata, handles)
@@ -700,7 +707,8 @@ function xunits_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns xunits contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from xunits
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function xunits_CreateFcn(hObject, eventdata, handles)
@@ -750,7 +758,7 @@ function analysisButton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-analysis_struct = analysis_info()
+analysis_struct = analysis_info();
 
 analysis_struct(get(handles.analysisPopup,'Value')).func(handles)
 
@@ -805,7 +813,8 @@ function imagesliderText_Callback(hObject, eventdata, handles)
 value = str2double(get(hObject,'String'))
 setslider(value,handles.imageslider,handles.imagesliderText);
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function imagesliderText_CreateFcn(hObject, eventdata, handles)
@@ -834,7 +843,8 @@ setslider(value,handles.Mincounts,handles.MincountsText);
 
 fix_max_min_values('max',handles);
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function MincountsText_CreateFcn(hObject, eventdata, handles)
@@ -861,7 +871,8 @@ setslider(value,handles.Maxcounts,handles.MaxcountsText);
 
 fix_max_min_values('min',handles);
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function MaxcountsText_CreateFcn(hObject, eventdata, handles)
@@ -883,7 +894,8 @@ function zoombox_Callback(hObject, eventdata, handles)
 
 % Hint: get(hObject,'Value') returns toggle state of zoombox
 
-plotpanel(hObject,handles);
+handles=plotpanel(hObject,handles);
+guidata(hObject,handles);
 
 if get(handles.zoombox,'Value')
 	roixnp = handles.imgstruct.ROI_XNP(imgnum);
@@ -977,5 +989,3 @@ function expstrbox_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-

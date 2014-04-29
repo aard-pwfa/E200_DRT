@@ -6,6 +6,8 @@ function handles=plotpanel(hObject,handles)
 	ylim_main = get(gca,'YLim');
 	
 	[img,imgnum]=img2plot(handles);
+	handles.imgnum=imgnum;
+	handles.curimg=img;
 
 	zoom(gcf,'reset');
 	set(gca,'XLim',xlim_main);

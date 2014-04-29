@@ -13,7 +13,7 @@ function handles=loadimages(hObject,handles)
 	% Make things cleaner
 	data=handles.data;
 	
-	imgstruct=get_imgstruct(handles);
+	[imgstruct,handles.camname]=get_imgstruct(handles);
 	handles.imgstruct=imgstruct;
 	
 	allsteps=get(handles.allsteps,'Value');
