@@ -17,5 +17,11 @@ function handles=init(handles,varargin_main)
 	set(handles.Mincounts,'Value',0);
 	set(handles.Mincounts,'SliderStep',[1,10]);
 
+	sort_str=fieldnames(handles.handles_main.data.raw.scalars);
+	% First is special: just use index.
+	sort_array=['As taken';sort_str];
+	set(handles.sortvar,'String',sort_array);
+	handles.sort_str=sort_str;
+
 	plotpreview(handles);
 end

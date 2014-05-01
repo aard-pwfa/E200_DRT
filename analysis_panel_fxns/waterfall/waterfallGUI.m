@@ -22,7 +22,7 @@ function varargout = waterfallGUI(varargin)
 
 % Edit the above text to modify the response to help waterfallGUI
 
-% Last Modified by GUIDE v2.5 28-Apr-2014 16:38:52
+% Last Modified by GUIDE v2.5 29-Apr-2014 17:55:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -284,6 +284,40 @@ function MincountsText_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in print2elog.
+function print2elog_Callback(hObject, eventdata, handles)
+% hObject    handle to print2elog (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+comment        = get(handles.handles_main.Comment,'String');
+camname = handles.handles_main.camname;
+print2elog(handles,handles.output_axes,@plotout,comment,camname,handles.handles_main.data)
+
+
+% --- Executes on selection change in sortvar.
+function sortvar_Callback(hObject, eventdata, handles)
+% hObject    handle to sortvar (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns sortvar contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from sortvar
+
+
+% --- Executes during object creation, after setting all properties.
+function sortvar_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sortvar (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
