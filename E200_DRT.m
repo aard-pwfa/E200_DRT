@@ -929,43 +929,39 @@ function print2elog_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-fig=figure();
-ax=axes();
-[img,imgnum]=img2plot(handles);
-
-xlim_main=get(handles.fig1,'XLim');
-ylim_main=get(handles.fig1,'YLim');
-set(ax,'XLim',xlim_main);
-set(ax,'YLim',ylim_main);
-
-prompt    = {'Title','X Label','Y Label','Elog Title','Comment to Print'};
-dlg_title = 'Plot Details';
-num_lines = [1,30;1,20;1,20;1,30;10,50];
-
-[temp,camname] = get_imgstruct(handles);
 comment        = get(handles.Comment,'String');
-comment = flattenstringrows(comment);
-dataset        = handles.data.raw.metadata.param.dat{1}.save_name;
-comment2print  = sprintf(['Dataset: ' dataset '\n' comment]);
-def            = {camname,'','',['DRT Data from ' camname],comment2print};
-
-result=inputdlg(prompt,dlg_title,num_lines,def);
-comment2print = flattenstringrows(result{5})
-% comment2print = cellstr(result{5});
-% temp = ''
-% for i=1:numel(comment2print)-1
-%         temp = [temp comment2print{i} '\n'];
+[temp,camname] = get_imgstruct(handles);
+print2elog(handles,handles.fig1,@img2plot,comment,camname,handles.data)
+% fig=figure();
+% ax=axes();
+% [img,imgnum]=img2plot(handles);
+% 
+% xlim_main=get(handles.fig1,'XLim');
+% ylim_main=get(handles.fig1,'YLim');
+% set(ax,'XLim',xlim_main);
+% set(ax,'YLim',ylim_main);
+% 
+% prompt    = {'Title','X Label','Y Label','Elog Title','Comment to Print'};
+% dlg_title = 'Plot Details';
+% num_lines = [1,30;1,20;1,20;1,30;10,50];
+% 
+% [temp,camname] = get_imgstruct(handles);
+% comment        = get(handles.Comment,'String');
+% comment = flattenstringrows(comment);
+% dataset        = handles.data.raw.metadata.param.dat{1}.save_name;
+% comment2print  = sprintf(['Dataset: ' dataset '\n' comment]);
+% def            = {camname,'','',['DRT Data from ' camname],comment2print};
+% 
+% result=inputdlg(prompt,dlg_title,num_lines,def);
+% comment2print = flattenstringrows(result{5})
+% 
+% addlabels(result{2},result{3},result{1});
+% 
+% printans=questdlg(sprintf(['Comment: \n\n' comment2print '\n\nPrint to Elog?']),'Final Confirmation','Yes','No','No');
+% if strcmp(printans,'Yes')
+% 	authstr=handles.data.raw.metadata.param.dat{1}.experiment;
+% 	util_printLog(fig,'title',result{4},'text',sprintf(comment2print),'author',authstr);
 % end
-% temp = [temp comment2print{end}];
-% comment2print=temp;
-
-addlabels(result{2},result{3},result{1});
-
-printans=questdlg(sprintf(['Comment: \n\n' comment2print '\n\nPrint to Elog?']),'Final Confirmation','Yes','No','No');
-if strcmp(printans,'Yes')
-	authstr=handles.data.raw.metadata.param.dat{1}.experiment;
-	util_printLog(fig,'title',result{4},'text',sprintf(comment2print),'author',authstr);
-end
 
 
 
