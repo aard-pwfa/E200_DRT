@@ -32,26 +32,39 @@ function handles=loadimages(hObject,handles)
 		end
 		bool=(data.raw.scalars.step_num.dat==stepval);
 		wanted_UID_step=data.raw.scalars.step_num.UID(bool);
+		handles.image_UIDs = wanted_UID_step;
 	end
 
-	numimg=numel(wanted_UID_step)
-	if numimg > 50
-		cprintf('Red',['Number of images is ' num2str(numimg) '! Only accessing first 50.\n']);
-		wanted_UID_step = wanted_UID_step(1:50);
-		numimg=50;
+	num_img = numel(wanted_UID_step);
+	% Load in sets of up to 50 and process.
+	num_groups = ceil(num_img/50);
+	handles.maxrawpixel=0;
+	for i=[num_groups:-1:1]
+		first_group_img = (i-1)*50 + 1;
+		handles = load50(first_group_img,wanted_UID_step,handles);
+		group_maxpixel = maxpixel(handles.images);
+		handles.maxrawpixel = max(handles.maxrawpixel,group_maxpixel);
 	end
-	
-	display(['Loading images, expect ' num2str(handles.data.raw.metadata.param.dat{1}.n_shot*15/100) ' second wait...']);
-	% [handles.images,handles.images_bg]=E200_load_images(imgstruct,wanted_UID_step);
-	[images,images_bg]=E200_load_images(imgstruct,wanted_UID_step);
-	for i = 1:size(images,1)
-		disp(i);
-		images{i} = images{i}-uint16(images_bg{i});
-	end
-	clear images_bg;
-	handles.images = images;
-	clear images;
-	num_img=size(handles.images,2);
+
+%	numimg=numel(wanted_UID_step)
+%	if numimg > 50
+%		cprintf('Red',['Number of images is ' num2str(numimg) '! Only accessing first 50.\n']);
+%		wanted_UID_step = wanted_UID_step(1:50);
+%		numimg=50;
+%	end
+%	
+%	display(['Loading images, expect ' num2str(handles.data.raw.metadata.param.dat{1}.n_shot*15/100) ' second wait...']);
+%	% [handles.images,handles.images_bg]=E200_load_images(imgstruct,wanted_UID_step);
+%	[images,images_bg]=E200_load_images(imgstruct,wanted_UID_step);
+%	for i = 1:size(images,1)
+%		disp(i);
+%		images{i} = images{i}-uint16(images_bg{i});
+%	end
+%	clear images_bg;
+%	handles.images = images;
+%	clear images;
+%	num_img=size(handles.images,2);
+
 	[ylim,xlim]=size(handles.images{1});
 	set(gca,'XLim',0.5+[0,xlim]);
 	set(gca,'YLim',0.5+[0,ylim]);
@@ -73,7 +86,9 @@ function handles=loadimages(hObject,handles)
 	
 	set(handles.imageslider,'Enable','On');
 	set(handles.imageslider,'Max',num_img);
-	% set(handles.imageslider,'Value',1);
+	if get(handles.imageslider,'Value')<1
+		set(handles.imageslider,'Value',1);
+	end
 	set(handles.imageslider,'SliderStep',[1/(num_img-1),10/(num_img-1)])
 	
 	guidata(hObject,handles);

@@ -5,7 +5,7 @@ function handles=plotpanel(hObject,handles)
 	xlim_main = get(gca,'XLim');
 	ylim_main = get(gca,'YLim');
 	
-	[img,imgnum]=img2plot(handles);
+	[img,imgnum,handles]=img2plot(handles);
 	handles.imgnum=imgnum;
 	handles.curimg=img;
 
