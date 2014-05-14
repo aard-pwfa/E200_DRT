@@ -5,7 +5,7 @@
 	path = aux_functions/ButterflyEmittancePython
 	url = git@github.com:joelfrederico/ButterflyEmittancePython.git
 [submodule "aux_functions/FACET_Emittance"]
-	path = aux_functions/FACET_Emittance
+	path = analysis_panel_fxns/FACET_Emittance
 	url = git@github.com:joelfrederico/FACET_Emittance.git
 [submodule "aux_functions/E200_Cam_Energy_Cal"]
 	path = aux_functions/E200_Cam_Energy_Cal
