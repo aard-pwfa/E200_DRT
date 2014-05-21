@@ -174,7 +174,7 @@ end
 
 curpath=pwd;
 cd(searchpath);
-[Filename,Pathname,FilterIndex]=uigetfile('*.mat','Open E200 scan_info file',defaultfile);
+[Filename,Pathname,FilterIndex]=uigetfile('*.mat','Open data file',defaultfile);
 cd(curpath);
 
 % Pathname='/nas/nas-li20-pm01/E200/2013/20130511/E200_11071/';
@@ -185,17 +185,14 @@ cd(curpath);
 hostname = strrep(hostname,sprintf('\n'),'');
 isfs20=strcmp(hostname,'facet-srv20');
 
-if isfs20
-	% loadfile=fullfile('/home/fphysics/joelfred',Pathname,Filename)
-	loadfile=fullfile(Pathname,Filename);
+loadfile=fullfile(Pathname,Filename);
+[temp,file,temp] = fileparts(loadfile);
+[temp,temp,ext] = fileparts(file);
+if ~strcmp(ext,'.local')
+	data=E200_load_data(loadfile,get(handles.expstrbox,'String'));
 else
-	loadfile=fullfile(Pathname,Filename);
+	load(loadfile)
 end
-
-% gl.loadfile=loadfile;
-% loadfile = '/home/fphysics/joelfred/nas/nas-li20-pm01/E200/2013/20130428/E200_10836'
-
-data=E200_load_data(loadfile,get(handles.expstrbox,'String'));
 % display(data.VersionInfo.Version);
 
 switch data.raw.metadata.settype
