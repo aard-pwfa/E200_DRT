@@ -195,6 +195,11 @@ else
 end
 % display(data.VersionInfo.Version);
 
+if strcmp(data.raw.metadata.settype,'scan') && data.raw.metadata.n_steps==1
+	data.raw.metadata.settype = 'daq'
+end
+
+
 switch data.raw.metadata.settype
 	case 'scan'
 
