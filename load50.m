@@ -4,7 +4,7 @@ function [handles,varargout]=load50(imgnum,uids,handles)
 	maximg = length(uids);
 	num_groups = ceil(maximg/50);
 	if isfield(handles,'curimg_range')
-		if imgnum > min(handles.curimg_range) && imgnum < max(handles.curimg_range)
+		if imgnum >= min(handles.curimg_range) && imgnum <= max(handles.curimg_range)
 			loadnew_bool=false;
 		else
 			loadnew_bool=true;
