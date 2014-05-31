@@ -17,13 +17,13 @@ function [handles,varargout]=load50(imgnum,uids,handles)
 		% Which set of 50 the image is in
 		group=ceil(double(imgnum)/50)
 		display(['Loading group ' num2str(group) ' of ' num2str(num_groups) ' groups of images...']);
-		startind=(group-1)*50 + 1
+		startind=(group-1)*50 + 1;
 		endind = group*50;
-		endind = min(endind,maximg)
+		endind = min(endind,maximg);
 		[images,images_bg]=E200_load_images(imgstr,uids(startind:endind),handles.data);
 
-		for i = 1:size(images,1)
-			disp(i);
+		for i = 1:size(images,2)
+			% disp(i);
 			images{i} = images{i}-uint16(images_bg{i});
 		end
 		clear images_bg;
@@ -33,7 +33,9 @@ function [handles,varargout]=load50(imgnum,uids,handles)
 	end
 
 	if nargout==2
-		varargout{1}=handles.images(mod(imgnum,50));
+		adj_img_number = mod(imgnum-1,50)+1;
+		display(['Loading adjusted image number ' num2str(adj_img_number)]);
+		varargout{1}=handles.images{adj_img_number};
 	end
 	set(handles.imageslider,'Enable','On');
 end

@@ -1,5 +1,5 @@
 function [img,imgnum,handles]=img2plot(handles)
-	imgnum=int32(get(handles.imageslider,'Value'))
+	imgnum=int32(get(handles.imageslider,'Value'));
 	maxval=int32(get(handles.Maxcounts,'Value'));
 	minval=int32(get(handles.Mincounts,'Value'));
 
@@ -9,8 +9,6 @@ function [img,imgnum,handles]=img2plot(handles)
 	colormap(cmap.wbgyr);
 
 	[handles,img] = load50(imgnum,handles.image_UIDs,handles);
-
-	img=handles.images{mod(imgnum,50)};
 
 	if minval == 0
 		minval = 0.5;
