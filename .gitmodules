@@ -10,3 +10,6 @@
 [submodule "aux_functions/MatlabScripts"]
 	path = aux_functions/MatlabScripts
 	url = git@github.com:joelfrederico/MatlabScripts.git
+[submodule "analysis_panel_fxns/Waterfall_Adli"]
+	path = analysis_panel_fxns/Waterfall_Adli
+	url = ssh://git@localhost:7777/aard-pwfa/Waterfall_Adli.git
