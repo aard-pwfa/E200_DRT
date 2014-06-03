@@ -5,4 +5,6 @@ function out = analysis_info()
 	out(2).func = @spectrum_ana;
 	out(3).str = 'Waterfall Plot 2';
 	out(3).func = @waterfall;
+	out(4).str = 'Waterfall_Adli';
+	out(4).func = @Waterfall_Adli;
 end
