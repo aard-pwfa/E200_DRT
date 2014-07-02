@@ -20,7 +20,7 @@ function [handles,varargout]=load50(imgnum,uids,handles)
 		startind=(group-1)*50 + 1;
 		endind = group*50;
 		endind = min(endind,maximg);
-		[images,images_bg]=E200_load_images(imgstr,uids(startind:endind),handles.data);
+		[images,images_bg]=E200_load_images(imgstr,uids(startind:endind),'data',handles.data);
 
 		for i = 1:size(images,2)
 			% disp(i);
