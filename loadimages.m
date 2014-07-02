@@ -41,6 +41,9 @@ function handles=loadimages(hObject,handles)
 	handles.maxrawpixel=0;
 	for i=[num_groups:-1:1]
 		first_group_img = (i-1)*50 + 1;
+		if isfield(handles,'curimg_range')
+			handles=rmfield(handles,'curimg_range');
+		end
 		handles = load50(first_group_img,wanted_UID_step,handles);
 		group_maxpixel = maxpixel(handles.images);
 		handles.maxrawpixel = max(handles.maxrawpixel,group_maxpixel);
