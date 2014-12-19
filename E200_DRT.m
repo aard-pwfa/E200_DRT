@@ -228,7 +228,11 @@ end
 
 % All file initializations
 if ~strcmp(data.raw.metadata.settype,'none')
-	param=data.raw.metadata.param.dat{1};
+	if isfield(data.raw.metadata.param,'dat')
+		param=data.raw.metadata.param.dat{1};
+	else
+		param = data.raw.metadata.param;
+	end
 
 	% Set strings
 	Cams_str=fieldnames(data.raw.images);
