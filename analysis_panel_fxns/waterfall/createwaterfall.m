@@ -1,4 +1,6 @@
 function handles=createwaterfall(handles)
+	global ghandles
+
 	imgstr=handles.handles_main.data.raw.images.(handles.handles_main.camname);
 	numimgs=length(imgstr.UID);
 	display(['Processing ' num2str(numimgs) ' into waterfall...']);
@@ -42,14 +44,15 @@ function handles=createwaterfall(handles)
 	% ====================================
 	sortvarind=get(handles.sortvar,'Value');
 	display(sortvarind)
+	handles.waterarray_unsort=waterarray;
 	if sortvarind~=1
 		display('here');
-		scalarname=handles.sort_str{sortvarind};
+		scalarname=handles.sort_str{sortvarind-1};
+		display(scalarname)
 		scalarstr=handles.handles_main.data.raw.scalars.(scalarname);
 		% dat=E200_api_getdat(scalarstr,imgstr.UID)
 		[dat,scalarind,imgind]=intersect(scalarstr.UID,imgstr.UID);
 		[temp,sortind]=sort(scalarstr.dat(scalarind));
-		display(sortind);
 		waterarray = waterarray(sortind,:);
 	end
 
@@ -68,4 +71,7 @@ function handles=createwaterfall(handles)
 	% figure;
 	plotoutput(handles);
 	display('Finished!');
+
+	ghandles = handles
 end
+
