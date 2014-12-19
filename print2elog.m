@@ -1,7 +1,8 @@
-function print2elog(handles,figin,plotfcn,comment,camname,data)
+function print2elog(handles,figin,plotfcn,comment,title,xlabel,ylabel,data)
 	fig=figure();
 	ax=axes();
 	plotfcn(handles);
+	addlabels(xlabel,ylabel,title);
 	
 	xlim_main=get(figin,'XLim');
 	ylim_main=get(figin,'YLim');
@@ -9,15 +10,15 @@ function print2elog(handles,figin,plotfcn,comment,camname,data)
 	set(ax,'YLim',ylim_main);
 	
 	prompt    = {'Title','X Label','Y Label','Elog Title','Comment to Print'};
-	dlg_title = 'Plot Details';
+	dlg_title = 'Add Plot Details and Preview';
 	num_lines = [1,30;1,20;1,20;1,30;10,50];
 	
-	% [temp,camname] = get_imgstruct(handles);
+	% [temp,title] = get_imgstruct(handles);
 	% comment        = get(handles.Comment,'String');
 	comment = flattenstringrows(comment);
 	dataset        = data.raw.metadata.param.dat{1}.save_name;
 	comment2print  = sprintf(['Dataset: ' dataset '\n' comment]);
-	def            = {camname,'','',['DRT Data from ' camname],comment2print};
+	def            = {title,xlabel,ylabel,['DRT Data from ' title],comment2print};
 	
 	result=inputdlg(prompt,dlg_title,num_lines,def);
 	comment2print = flattenstringrows(result{5})

@@ -933,7 +933,9 @@ function print2elog_Callback(hObject, eventdata, handles)
 
 comment        = get(handles.Comment,'String');
 [temp,camname] = get_imgstruct(handles);
-print2elog(handles,handles.fig1,@img2plot,comment,camname,handles.data)
+xlabel = '';
+ylabel = '';
+print2elog(handles,handles.fig1,@img2plot,comment,camname,xlabel,ylabel,handles.data)
 % fig=figure();
 % ax=axes();
 % [img,imgnum]=img2plot(handles);
