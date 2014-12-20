@@ -298,7 +298,9 @@ function print2elog_Callback(hObject, eventdata, handles)
 
 comment        = get(handles.handles_main.Comment,'String');
 camname = handles.handles_main.camname;
-print2elog(handles,handles.output_axes,@plotout,comment,camname,handles.handles_main.data)
+xlabel = ''
+ylabel = ''
+print2elog(handles,handles.output_axes,@plotout,comment,camname,xlabel,ylabel,handles.handles_main.data)
 
 
 % --- Executes on selection change in sortvar.
