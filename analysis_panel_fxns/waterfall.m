@@ -1,4 +1,4 @@
-function waterfall(handles)
+function handles = waterfall(handles)
 	addpath(fullfile(pwd,'analysis_panel_fxns','waterfall'));
 	waterfallGUI(handles);
 end

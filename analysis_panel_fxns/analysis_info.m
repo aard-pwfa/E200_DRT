@@ -9,4 +9,6 @@ function out = analysis_info()
 	out(4).func = @Waterfall_Adli;
 	out(5).str = '2D Flow Plot';
 	out(5).func = @flowplot2D;
+	out(6).str = 'E224 Interaction';
+	out(6).func = @E224Interaction;
 end

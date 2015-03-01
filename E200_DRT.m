@@ -766,7 +766,13 @@ function analysisButton_Callback(hObject, eventdata, handles)
 
 analysis_struct = analysis_info();
 
-analysis_struct(get(handles.analysisPopup,'Value')).func(handles)
+out = analysis_struct(get(handles.analysisPopup,'Value')).func(handles);
+
+if class(out) == 'struct'
+	handles = out;
+	guidata(hObject, handles);
+end
+
 
 
 % --- Executes on button press in globaldataButton.

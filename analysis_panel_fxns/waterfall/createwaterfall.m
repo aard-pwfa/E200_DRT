@@ -47,13 +47,19 @@ function handles=createwaterfall(handles)
 	handles.waterarray_unsort=waterarray;
 	if sortvarind~=1
 		display('here');
-		scalarname=handles.sort_str{sortvarind-1};
+		settings=handles.sort_settings;
+		scalarname = settings{sortvarind,1};
+		type = settings{sortvarind,2};
 		display(scalarname)
-		scalarstr=handles.handles_main.data.raw.scalars.(scalarname);
+		scalarstr=handles.handles_main.data.(type).scalars.(scalarname);
 		% dat=E200_api_getdat(scalarstr,imgstr.UID)
 		[dat,scalarind,imgind]=intersect(scalarstr.UID,imgstr.UID);
 		[temp,sortind]=sort(scalarstr.dat(scalarind));
-		waterarray = waterarray(sortind,:);
+		if get(handles.rotation,'Value')
+			waterarray = waterarray(:,sortind);
+		else
+			waterarray = waterarray(sortind,:);
+		end
 	end
 
 	handles.waterarray = waterarray;

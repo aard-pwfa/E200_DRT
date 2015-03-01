@@ -16,7 +16,7 @@ function print2elog(handles,figin,plotfcn,comment,title,xlabel,ylabel,data)
 	% [temp,title] = get_imgstruct(handles);
 	% comment        = get(handles.Comment,'String');
 	comment = flattenstringrows(comment);
-	dataset        = data.raw.metadata.param.dat{1}.save_name;
+	dataset        = data.raw.metadata.param.save_name;
 	comment2print  = sprintf(['Dataset: ' dataset '\n' comment]);
 	def            = {title,xlabel,ylabel,['DRT Data from ' title],comment2print};
 	
@@ -34,7 +34,7 @@ function print2elog(handles,figin,plotfcn,comment,title,xlabel,ylabel,data)
 	
 	printans=questdlg(sprintf(['Comment: \n\n' comment2print '\n\nPrint to Elog?']),'Final Confirmation','Yes','No','No');
 	if strcmp(printans,'Yes')
-		authstr=data.raw.metadata.param.dat{1}.experiment;
+		authstr=data.raw.metadata.param.experiment;
 		util_printLog(fig,'title',result{4},'text',sprintf(comment2print),'author',authstr);
 	end
 end
