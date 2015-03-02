@@ -1,11 +1,9 @@
-function plotout(handles)
-	mincounts=get(handles.Mincounts,'Value');
-	maxcounts=get(handles.Maxcounts,'Value');
+function plotout(min_counts,max_counts,water_array)
 	
 	cmap=custom_cmap();
 	colormap(cmap.wbgyr);
 
-	imagesc(handles.waterarray,[mincounts,maxcounts]);
+	imagesc(water_array,[min_counts,max_counts]);
 
-	colorbar;
+	% colorbar;
 end

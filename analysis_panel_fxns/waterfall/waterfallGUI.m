@@ -300,7 +300,15 @@ comment = get(handles.handles_main.Comment,'String');
 camname = handles.handles_main.camname;
 xlabel  = '';
 ylabel  = '';
-print2elog(handles,handles.output_axes,@plotout,comment,camname,xlabel,ylabel,handles.handles_main.data)
+
+fig=figure();
+ax=subplot(2,1,1);
+plotoutput(ax,handles);
+ax=subplot(2,1,2);
+plot_sort(handles,ax);
+
+printfig2elog(fig,handles.handles_main.data,comment,camname)
+% print2elog(handles,handles.output_axes,@plotout,comment,camname,xlabel,ylabel,handles.handles_main.data)
 
 
 % --- Executes on selection change in sortvar.

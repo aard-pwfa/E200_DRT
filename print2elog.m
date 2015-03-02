@@ -13,8 +13,6 @@ function print2elog(handles,figin,plotfcn,comment,title,xlabel,ylabel,data)
 	dlg_title = 'Add Plot Details and Preview';
 	num_lines = [1,30;1,20;1,20;1,30;10,50];
 	
-	% [temp,title] = get_imgstruct(handles);
-	% comment        = get(handles.Comment,'String');
 	comment = flattenstringrows(comment);
 	dataset        = data.raw.metadata.param.save_name;
 	comment2print  = sprintf(['Dataset: ' dataset '\n' comment]);
@@ -22,13 +20,6 @@ function print2elog(handles,figin,plotfcn,comment,title,xlabel,ylabel,data)
 	
 	result=inputdlg(prompt,dlg_title,num_lines,def);
 	comment2print = flattenstringrows(result{5})
-	% comment2print = cellstr(result{5});
-	% temp = ''
-	% for i=1:numel(comment2print)-1
-	%         temp = [temp comment2print{i} '\n'];
-	% end
-	% temp = [temp comment2print{end}];
-	% comment2print=temp;
 	
 	addlabels(result{2},result{3},result{1});
 	
