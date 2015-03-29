@@ -22,7 +22,7 @@ function varargout = waterfallGUI(varargin)
 
 % Edit the above text to modify the response to help waterfallGUI
 
-% Last Modified by GUIDE v2.5 29-Apr-2014 17:55:15
+% Last Modified by GUIDE v2.5 29-Mar-2015 01:53:36
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -200,7 +200,7 @@ setslider(value,handles.Maxcounts,handles.MaxcountsText);
 
 fix_max_min_values('min',handles);
 
-handles=plotoutput(handles);
+handles=plotoutput(handles.output_axes,handles);
 guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -252,7 +252,8 @@ setslider(value,handles.Mincounts,handles.MincountsText);
 
 fix_max_min_values('max',handles);
 
-handles=plotoutput(handles);
+% handles=plotoutput(handles);
+handles=plotoutput(handles.output_axes,handles);
 guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -302,6 +303,8 @@ xlabel  = '';
 ylabel  = '';
 
 fig=figure();
+coords = get(fig,'Position');
+set(fig,'Position',[coords(1:3) coords(4)*2])
 ax=subplot(2,1,1);
 plotoutput(ax,handles);
 ax=subplot(2,1,2);
@@ -320,6 +323,11 @@ function sortvar_Callback(hObject, eventdata, handles)
 % Hints: contents = cellstr(get(hObject,'String')) returns sortvar contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from sortvar
 
+if isfield(handles,'waterarray_unsort')
+	handles = finishwaterfall(handles);
+end
+guidata(hObject,handles);
+
 
 % --- Executes during object creation, after setting all properties.
 function sortvar_CreateFcn(hObject, eventdata, handles)
@@ -332,3 +340,21 @@ function sortvar_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in printsingle2elog.
+function printsingle2elog_Callback(hObject, eventdata, handles)
+% hObject    handle to printsingle2elog (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+comment = get(handles.handles_main.Comment,'String');
+camname = handles.handles_main.camname;
+xlabel  = '';
+ylabel  = '';
+
+fig=figure();
+ax=subplot(1,1,1);
+plotoutput(ax,handles);
+
+printfig2elog(fig,handles.handles_main.data,comment,camname)

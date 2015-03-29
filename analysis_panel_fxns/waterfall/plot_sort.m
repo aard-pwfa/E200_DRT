@@ -2,7 +2,7 @@ function plot_sort(handles,ax)
 	sortvarind=get(handles.sortvar,'Value');
 	if sortvarind == 1
 		name='Shot (As Taken)';
-		values=1:length(imgstr.UID);
+		values=1:handles.numimgs;
 	else
 		name=handles.sort_scalarname;
 		values=handles.sort_scalar_dat;

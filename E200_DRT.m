@@ -266,11 +266,13 @@ if ~strcmp(data.raw.metadata.settype,'none')
 	set(handles.Mincounts,'SliderStep',[1,10]);
 	set(handles.Mincounts,'Enable','off');
 
-	corr_str=fieldnames(data.raw.scalars);
+	% corr_str=fieldnames(data.raw.scalars);
+	% sort_str_proc = fieldnames(data.processed.scalars);
 	% First is special: just use index.
-	corr_str=['As taken';corr_str];
-	set(handles.Xcorrpopup,'String',corr_str);
-	set(handles.Ycorrpopup,'String',corr_str);
+	% corr_str=['As taken';corr_str];
+	% set(handles.Xcorrpopup,'String',corr_str);
+	% set(handles.Ycorrpopup,'String',corr_str);
+	handles = init_corrs(handles,data);
 
 	% Turn things off.
 	cla(handles.fig1);
@@ -773,6 +775,8 @@ if class(out) == 'struct'
 	guidata(hObject, handles);
 end
 
+handles = init_corrs(handles,handles.data);
+guidata(hObject, handles);
 
 
 % --- Executes on button press in globaldataButton.

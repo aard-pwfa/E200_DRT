@@ -2,8 +2,10 @@ function handles=createwaterfall(handles)
 	global ghandles;
 
 	imgstr=handles.handles_main.data.raw.images.(handles.handles_main.camname);
-	numimgs=length(imgstr.UID);
-	display(['Processing ' num2str(numimgs) ' into waterfall...']);
+	handles.uids = imgstr.UID;
+	handles.numimgs=length(handles.uids);
+	
+	display(['Processing ' num2str(handles.numimgs) ' into waterfall...']);
 	% ====================================
 	% Set rotation variables
 	% ====================================
@@ -20,12 +22,12 @@ function handles=createwaterfall(handles)
 	% ====================================
 	% Create array
 	% ====================================
-	waterarray=zeros(numimgs,arraysize);
-	for i=1:numimgs
+	waterarray=zeros(handles.numimgs,arraysize);
+	for i=1:handles.numimgs
 		if mod(i,10)==0
 			display(['Image number ' num2str(i)]);
 		end
-		images=E200_load_images(imgstr,imgstr.UID(i));
+		images=E200_load_images(imgstr,handles.uids(i));
 		images=images{1};
 		subimg=images(handles.roi.miny:handles.roi.maxy,handles.roi.minx:handles.roi.maxx);
 		subimg=sum(subimg,sum_dimension);
@@ -39,50 +41,52 @@ function handles=createwaterfall(handles)
 		waterarray=rot90(waterarray,-1);
 	end
 
-	% ====================================
-	% Sort if requested
-	% ====================================
-	sortvarind=get(handles.sortvar,'Value');
-	% display(sortvarind)
 	handles.waterarray_unsort=waterarray;
-	settings=handles.sort_settings;
-	scalarname = settings{sortvarind,1};
-	if sortvarind~=1
-		type = settings{sortvarind,2};
-		% display(scalarname)
-		scalarstr=handles.handles_main.data.(type).scalars.(scalarname);
-		% dat=E200_api_getdat(scalarstr,imgstr.UID)
-		[dat,scalarind,imgind]=intersect(scalarstr.UID,imgstr.UID);
-		scalar_dat_intersect = scalarstr.dat(scalarind);
-		[scalar_dat_sort,sortind]=sort(scalar_dat_intersect);
-		if get(handles.rotation,'Value')
-			waterarray = waterarray(:,sortind);
-		else
-			waterarray = waterarray(sortind,:);
-		end
-	else
-		scalar_dat_sort = 1:length(imgstr.UID);
-	end
 
-	handles.sort_scalarname = scalarname;
-	handles.sort_scalar_dat=scalar_dat_sort;
-	handles.waterarray = waterarray;
+	% % ====================================
+	% % Sort if requested
+	% % ====================================
+	% sortvarind=get(handles.sortvar,'Value');
+	% % display(sortvarind)
+	% settings=handles.sort_settings;
+	% scalarname = settings{sortvarind,1};
+	% if sortvarind~=1
+	% 	type = settings{sortvarind,2};
+	% 	% display(scalarname)
+	% 	scalarstr=handles.handles_main.data.(type).scalars.(scalarname);
+	% 	% dat=E200_api_getdat(scalarstr,imgstr.UID)
+	% 	[dat,scalarind,imgind]=intersect(scalarstr.UID,uids);
+	% 	scalar_dat_intersect = scalarstr.dat(scalarind);
+	% 	[scalar_dat_sort,sortind]=sort(scalar_dat_intersect);
+	% 	if get(handles.rotation,'Value')
+	% 		waterarray = waterarray(:,sortind);
+	% 	else
+	% 		waterarray = waterarray(sortind,:);
+	% 	end
+	% else
+	% 	scalar_dat_sort = 1:length(uids);
+	% end
+
+	% handles.sort_scalarname = scalarname;
+	% handles.sort_scalar_dat=scalar_dat_sort;
+	% handles.waterarray = waterarray;
 	
-	maxcounts = max(max(waterarray));
-	set(handles.Maxcounts,'Max',maxcounts);
-	set(handles.Maxcounts,'Value',maxcounts);
-	set(handles.Maxcounts,'SliderStep',[0.01,0.1]);
+	% maxcounts = max(max(waterarray));
+	% set(handles.Maxcounts,'Max',maxcounts);
+	% set(handles.Maxcounts,'Value',maxcounts);
+	% set(handles.Maxcounts,'SliderStep',[0.01,0.1]);
 
-	set(handles.Mincounts,'Max',maxcounts-1);
-	set(handles.Mincounts,'Value',0);
-	set(handles.Mincounts,'SliderStep',[0.01,0.1]);
+	% set(handles.Mincounts,'Max',maxcounts-1);
+	% set(handles.Mincounts,'Value',0);
+	% set(handles.Mincounts,'SliderStep',[0.01,0.1]);
 
 
-	% figure;
-	plotoutput(handles.output_axes,handles);
-	plot_sort(handles,handles.sort_axes);
+	% % figure;
+	% plotoutput(handles.output_axes,handles);
+	% plot_sort(handles,handles.sort_axes);
 
-	display('Finished!');
+	% display('Finished!');
+	handles = finishwaterfall(handles);
 
 	ghandles = handles;
 end
