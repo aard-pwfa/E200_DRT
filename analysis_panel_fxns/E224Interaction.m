@@ -4,23 +4,23 @@ function handles = E224Interaction(handles)
 	%pathTemp = '/nas/nas-li20-pm00/E200/2015/20150228/E200_14629/E200_14629.mat';
 	
 	% Load the DAQ information
-	%holder = E200_load_data(pathTemp);
+	%data = E200_load_data(pathTemp);
 	
-	holder = handles.data;
+	data = handles.data;
 	
 	camname = handles.camname;
 	% YOu load the images based on UID, so grab those.
-	% UIDlist1 = holder.raw.images.E224_Trans.UID;
-	% UIDlist2 = holder.raw.images.CMOS_ELAN.UID;
+	% UIDlist1 = data.raw.images.E224_Trans.UID;
+	% UIDlist2 = data.raw.images.CMOS_ELAN.UID;
 	
 	% UIDMaster = intersect(UIDlist1,UIDlist2);
-	UIDMaster = holder.raw.images.(camname).UID;
+	UIDMaster = data.raw.images.(camname).UID;
 	UIDMaster = UIDMaster(UIDMaster > 1);
-	
+
 	% Now load the images.
-	E224_Trans = holder.raw.images.E224_Trans;
-	% imagesE224 = E200_load_images(holder.raw.images.E224_Trans,UIDMaster);
-	% imagesCMOS = E200_load_images(holder.raw.images.CMOS_ELAN,UIDMaster);
+	E224_Trans = data.raw.images.E224_Trans;
+	% imagesE224 = E200_load_images(data.raw.images.E224_Trans,UIDMaster);
+	% imagesCMOS = E200_load_images(data.raw.images.CMOS_ELAN,UIDMaster);
 	
 	%% Analyze the E224 image looking for the stripe
 	% _______________________________________________________________________
@@ -28,10 +28,10 @@ function handles = E224Interaction(handles)
 	
 	E224CameraSums = zeros(0,length(N_E224));
 	
-	holder.processed.scalars.E224InteractionStrength.UID = [];
-	holder.processed.scalars.E224InteractionStrength.dat = [];
-	holder.processed.scalars.E224InteractionStrength.desc = 'Interaction strength based on summing';
-	E224InteractionStrength = holder.processed.scalars.E224InteractionStrength;
+	data.processed.scalars.E224InteractionStrength.UID = [];
+	data.processed.scalars.E224InteractionStrength.dat = [];
+	data.processed.scalars.E224InteractionStrength.desc = 'Interaction strength based on summing';
+	E224InteractionStrength = data.processed.scalars.E224InteractionStrength;
 
 	disp('Processing...');
 	
@@ -50,9 +50,9 @@ function handles = E224Interaction(handles)
 		% end
 	end
 
-	holder.processed.scalars.E224InteractionStrength = E224InteractionStrength;
+	data.processed.scalars.E224InteractionStrength = E224InteractionStrength;
 
-	handles.data = holder;
+	handles.data = data;
 
 	disp('Processed stuff!')
 	
