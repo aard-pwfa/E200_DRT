@@ -2,13 +2,15 @@ function handles=corrplot(hObject,handles)
 	
 	x_scal_ind=get(handles.Xcorrpopup,'Value');
 	y_scal_ind=get(handles.Ycorrpopup,'Value');
-	x_contents = get(handles.Xcorrpopup,'String');
-	x_scal_name=x_contents{x_scal_ind};
-	y_contents = get(handles.Ycorrpopup,'String');
-	y_scal_name=y_contents{y_scal_ind};
 
-	x=get_scalar_struct(x_scal_ind,x_scal_name,handles);
-	y=get_scalar_struct(y_scal_ind,y_scal_name,handles);
+	x_scal_name=handles.corr_settings{x_scal_ind,1};
+	y_scal_name=handles.corr_settings{y_scal_ind,1};
+
+	x_type = handles.corr_settings{x_scal_ind,2};
+	y_type = handles.corr_settings{y_scal_ind,2};
+
+	x=get_scalar_struct(x_scal_ind,x_type,x_scal_name,handles);
+	y=get_scalar_struct(y_scal_ind,y_type,y_scal_name,handles);
 
 	% Get common data
 	[vals,ix,iy]=intersect(x.UID,y.UID);
@@ -33,14 +35,14 @@ function handles=corrplot(hObject,handles)
 
 end
 
-function out=get_scalar_struct(ind,name,handles)
+function out=get_scalar_struct(ind,type,name,handles)
 	if ind==1
 		names=fieldnames(handles.data.raw.scalars);
 		out.UID=handles.data.raw.scalars.(names{1}).UID;
 		out.dat=[1:size(out.UID,2)];
 	else
-		out.UID=handles.data.raw.scalars.(name).UID;
-		out.dat=handles.data.raw.scalars.(name).dat;
+		out.UID=handles.data.(type).scalars.(name).UID;
+		out.dat=handles.data.(type).scalars.(name).dat;
 	end
 end
 
