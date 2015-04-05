@@ -1,5 +1,5 @@
 function handles = finishwaterfall(handles)
-	waterarray = handles.waterarray_unsort;
+	waterarray_unsort = handles.waterarray_unsort;
 	% ====================================
 	% Sort if requested
 	% ====================================
@@ -16,12 +16,13 @@ function handles = finishwaterfall(handles)
 		scalar_dat_intersect = scalarstr.dat(scalarind);
 		[scalar_dat_sort,sortind]=sort(scalar_dat_intersect);
 		if get(handles.rotation,'Value')
-			waterarray = waterarray(:,sortind);
+			waterarray = waterarray_unsort(:,fliplr(sortind));
 		else
-			waterarray = waterarray(sortind,:);
+			waterarray = waterarray_unsort(sortind,:);
 		end
 	else
 		scalar_dat_sort = 1:length(handles.uids);
+		waterarray = fliplr(waterarray_unsort);
 	end
 
 	handles.sort_scalarname = scalarname;
