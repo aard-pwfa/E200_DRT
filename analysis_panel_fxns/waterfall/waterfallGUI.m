@@ -297,7 +297,7 @@ function print2elog_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-comment = get(handles.handles_main.Comment,'String');
+% comment = get(handles.handles_main.Comment,'String');
 camname = handles.handles_main.camname;
 xlabel  = '';
 ylabel  = '';
@@ -310,7 +310,7 @@ plotoutput(ax,handles);
 ax=subplot(2,1,2);
 plot_sort(handles,ax);
 
-printfig2elog(fig,handles.handles_main.data,comment,camname)
+printfig2elog(fig,handles.handles_main.data,camname)
 % print2elog(handles,handles.output_axes,@plotout,comment,camname,xlabel,ylabel,handles.handles_main.data)
 
 
@@ -348,7 +348,7 @@ function printsingle2elog_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-comment = get(handles.handles_main.Comment,'String');
+% comment = get(handles.handles_main.Comment,'String');
 camname = handles.handles_main.camname;
 xlabel  = '';
 ylabel  = '';
@@ -357,4 +357,4 @@ fig=figure();
 ax=subplot(1,1,1);
 plotoutput(ax,handles);
 
-printfig2elog(fig,handles.handles_main.data,comment,camname)
+printfig2elog(fig,handles.handles_main.data,camname)

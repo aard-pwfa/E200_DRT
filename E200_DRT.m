@@ -22,7 +22,7 @@ function varargout = E200_DRT(varargin)
 
 % Edit the above text to modify the response to help E200_DRT
 
-% Last Modified by GUIDE v2.5 27-Apr-2014 17:08:33
+% Last Modified by GUIDE v2.5 04-Apr-2015 20:09:25
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -1003,3 +1003,14 @@ function expstrbox_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes on button press in stepcorr_button.
+function stepcorr_button_Callback(hObject, eventdata, handles)
+% hObject    handle to stepcorr_button (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles=stepcorrplot(handles);
+
+guidata(hObject,handles);

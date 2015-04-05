@@ -28,11 +28,12 @@ function handles=corrplot(hObject,handles)
 
 
 	% axes(handles.fig1);
-	figure;
+	fig=figure;
 	plot(x.dat,y.dat);
 	xlabel(x_scal_name,'Interpreter','none');
 	ylabel(y_scal_name,'Interpreter','none');
 
+	printfig2elog(fig,handles.data,'correlation plot');
 end
 
 function out=get_scalar_struct(ind,type,name,handles)
