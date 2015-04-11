@@ -949,7 +949,7 @@ comment        = get(handles.Comment,'String');
 [temp,camname] = get_imgstruct(handles);
 xlabel = '';
 ylabel = '';
-print2elog(handles,handles.fig1,@img2plot,comment,camname,xlabel,ylabel,handles.data)
+print2elog(handles,handles.fig1,@img2plot,comment,camname,xlabel,ylabel,handles.data);
 % fig=figure();
 % ax=axes();
 % [img,imgnum]=img2plot(handles);

@@ -10,7 +10,7 @@ function handles=init_corrs(handles,data)
 	for i=1:length(corr_str_proc)
 		corr_settings = [corr_settings;{corr_str_proc{i},'processed'}];
 	end
-	handles.corr_settings = corr_settings
+	handles.corr_settings = corr_settings;
 	set(handles.Xcorrpopup,'String',corr_str);
 	set(handles.Ycorrpopup,'String',corr_str);
 end
