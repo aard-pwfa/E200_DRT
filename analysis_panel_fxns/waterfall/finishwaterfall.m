@@ -18,14 +18,13 @@ function handles = finishwaterfall(handles)
 		type = settings{sortvarind,2};
 		% display(scalarname)
 		scalarstr=handles.handles_main.data.(type).scalars.(scalarname);
-		% dat=E200_api_getdat(scalarstr,imgstr.UID)
 
 		% ====================================
 		% Find overlap of images and scalar
 		% ====================================
 		[uid_intersect,scalarind,imgind]=intersect(scalarstr.UID,handles.uids);
 		% scalar_dat_intersect = scalarstr.dat(scalarind);
-		scalar_dat = E200_api_getdat(scalarstr,uid_intersect)
+		scalar_dat = E200_api_getdat(scalarstr,uid_intersect);
 
 		% ====================================
 		% Sort scalars
