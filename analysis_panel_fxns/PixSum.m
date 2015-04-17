@@ -1,5 +1,5 @@
 % Brendan sucks at this.
-function handles = E224Interaction(handles)
+function handles = E224Interaction(handles,hObject)
 	% The path to the DAQ of interest.
 	%pathTemp = '/nas/nas-li20-pm00/E200/2015/20150228/E200_14629/E200_14629.mat';
 	

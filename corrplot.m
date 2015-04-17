@@ -29,7 +29,7 @@ function handles=corrplot(hObject,handles)
 
 	% axes(handles.fig1);
 	fig=figure;
-	plot(x.dat,y.dat);
+	plot(x.dat,y.dat,'o');
 	xlabel(x_scal_name,'Interpreter','none');
 	ylabel(y_scal_name,'Interpreter','none');
 

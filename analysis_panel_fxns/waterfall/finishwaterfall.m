@@ -1,29 +1,49 @@
 function handles = finishwaterfall(handles)
 	waterarray_unsort = handles.waterarray_unsort;
 	% ====================================
-	% Sort if requested
+	% Get scalar to sort on
 	% ====================================
 	sortvarind=get(handles.sortvar,'Value');
 	% display(sortvarind)
 	settings=handles.sort_settings;
 	scalarname = settings{sortvarind,1};
+
+	% ====================================
+	% Sort only if not (As taken)
+	% ====================================
 	if sortvarind~=1
+		% ====================================
+		% Get scalar struct
+		% ====================================
 		type = settings{sortvarind,2};
 		% display(scalarname)
 		scalarstr=handles.handles_main.data.(type).scalars.(scalarname);
 		% dat=E200_api_getdat(scalarstr,imgstr.UID)
-		[dat,scalarind,imgind]=intersect(scalarstr.UID,handles.uids);
-		scalar_dat_intersect = scalarstr.dat(scalarind);
-		[scalar_dat_sort,sortind]=sort(scalar_dat_intersect);
-		if get(handles.rotation,'Value')
-			waterarray = waterarray_unsort(:,fliplr(sortind));
-		else
-			waterarray = waterarray_unsort(sortind,:);
-		end
+
+		% ====================================
+		% Find overlap of images and scalar
+		% ====================================
+		[uid_intersect,scalarind,imgind]=intersect(scalarstr.UID,handles.uids);
+		% scalar_dat_intersect = scalarstr.dat(scalarind);
+		scalar_dat = E200_api_getdat(scalarstr,uid_intersect)
+
+		% ====================================
+		% Sort scalars
+		% ====================================
+		[scalar_dat_sort,sortind]=sort(scalar_dat);
+
+		waterarray = waterarray_unsort(imgind(sortind),:);
 	else
 		scalar_dat_sort = 1:length(handles.uids);
 		waterarray = fliplr(waterarray_unsort);
 	end
+
+    	% ====================================
+    	% Rotate if requested
+    	% ====================================
+    	if get(handles.rotation,'Value')
+    	    waterarray=fliplr(rot90(waterarray,-1));
+    	end
 
 	handles.sort_scalarname = scalarname;
 	handles.sort_scalar_dat=scalar_dat_sort;
