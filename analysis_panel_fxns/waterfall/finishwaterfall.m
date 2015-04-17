@@ -35,7 +35,7 @@ function handles = finishwaterfall(handles)
 		waterarray = waterarray_unsort(imgind(sortind),:);
 	else
 		scalar_dat_sort = 1:length(handles.uids);
-		waterarray = fliplr(waterarray_unsort);
+		waterarray = waterarray_unsort;
 	end
 
     	% ====================================
